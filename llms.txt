@@ -1,0 +1,30 @@
+# Tamandua Software
+
+> Custom WordPress development studio. We build themes, plugins, and full websites from scratch for companies that need real engineering — not templates. AI-assisted development pipeline, clean code, direct communication with the developers building your project.
+
+Tamandua is a small, senior team based in Latin America serving clients worldwide. Named after the tamandua — an animal that finds precisely what it needs with remarkable efficiency. That's how we work. We integrate AI directly into our development workflow (Claude, Cursor) to ship faster without cutting corners.
+
+## Services
+
+- [Custom WordPress themes](https://tamandua-software.com/#services): Designed and developed from scratch, tailored to your brand. No page builder bloat.
+- [Bespoke WordPress plugins](https://tamandua-software.com/#services): Purpose-built functionality integrated with your actual workflow.
+- [Full website builds](https://tamandua-software.com/#services): Planning to launch. Optimized for performance, SEO, and scalability.
+
+## How we work
+
+- [Process](https://tamandua-software.com/#process): Listen → Propose → Build → Support. Short review cycles, full visibility, no surprises.
+- [Why Tamandua](https://tamandua-software.com/#why): Technical precision, code that lasts, direct communication, global quality at fair pricing.
+
+## Tech stack
+
+Core: WordPress, PHP 8, MySQL, JavaScript, Vue.js
+Tools: ACF Pro, VS Code, Cursor, Claude, GitHub
+
+## Contact
+
+- [Contact form](https://tamandua-software.com/#contact): Send a few lines about your project. Response within 24 hours with an initial assessment.
+
+## Optional
+
+- [Full site content as markdown](https://tamandua-software.com/llms-full.txt)
+- [Sitemap](https://tamandua-software.com/sitemap.xml)

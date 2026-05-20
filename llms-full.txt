@@ -1,0 +1,118 @@
+# Tamandua Software
+
+**URL:** https://tamandua-software.com/
+**Tagline:** Custom WordPress Development
+**Contact:** https://tamandua-software.com/#contact
+
+> Tamandua Software is a custom WordPress development studio. We build themes, plugins, and full websites from scratch for companies that need real engineering — not templates. AI-assisted pipeline, clean code, direct communication.
+
+---
+
+## Hero
+
+**Your business deserves more than a template.**
+
+We build custom WordPress themes, plugins, and full websites for companies that demand real results — not off-the-shelf solutions.
+
+- 100% custom code
+- Response time under 24 hours
+
+CTA: [Start your project](https://tamandua-software.com/#contact)
+
+---
+
+## Built with
+
+WordPress · WooCommerce · ACF Pro · PHP 8 · REST API
+
+---
+
+## Services
+
+Every project is built from the ground up, architected around your specific business needs.
+
+### 1. Custom themes
+WordPress themes designed and developed from scratch, tailored to your brand identity. No page builder bloat. Clean, maintainable code.
+
+### 2. Bespoke plugins
+Purpose-built functionality for your operations, integrated with your actual workflow. No bloated all-in-one tools doing everything poorly.
+
+### 3. Full websites
+From planning to launch. Optimised for performance, SEO, and scalability. Built to grow with your business.
+
+---
+
+## Showcase
+
+- **Performance-first** — Every site scores 90+ on Core Web Vitals.
+- **Clean code** — Standards-compliant and documented.
+
+---
+
+## Process
+
+No surprises. No fine print. Full visibility at every stage.
+
+1. **Listen** — We understand your business, your users, and your goals. No proposal without first understanding the real problem.
+2. **Propose** — Clear technical solution, defined scope, realistic timeline, transparent budget.
+3. **Build** — Short review cycles so you see progress and give feedback at every stage. Your project never moves blind.
+4. **Support** — We launch with thorough testing and train your team. Then we stay available for what comes next.
+
+---
+
+## Why Tamandua
+
+Named after the tamandua — an animal that finds precisely what it needs with remarkable efficiency. That's how we work.
+
+- **Technical precision** — We identify the exact solution for each problem. No detours, no unnecessary complexity. Every technical decision has a clear rationale.
+- **Code that lasts** — Documented, clean, standards-compliant. If another team needs to pick it up, they can — without drama.
+- **Direct communication** — You talk to the developers who build your project. No account managers, no middlemen, no noise.
+- **Global quality, fair pricing** — Latin America-based team with international standards. Top-tier talent, smart investment.
+
+---
+
+## Team
+
+### Pedro Diaz — Senior Full-Stack Developer
+15+ years building platforms for the Clinton Foundation, Women's Refugee Commission, ProZ.com, and Buenos Aires government. Former university professor. WordPress, PHP, Laravel, JavaScript.
+
+### Oderay Ferrer — Developer & Analyst
+Studying Programmer Analyst at UNLP. Java, Spring, JavaScript, SQL. Bringing fresh perspective and relentless curiosity to every project.
+
+---
+
+## How we build — Smarter tools. Sharper code.
+
+We integrate AI directly into our development pipeline. Every project benefits from AI-assisted code review, architecture planning, and accelerated iteration.
+
+### Core platform
+- **WordPress** — Enterprise content at scale
+- **PHP 8** — Modern server-side performance
+- **MySQL** — Reliable structured data
+- **JavaScript** — Dynamic frontend behavior
+- **Vue.js** — Reactive component interfaces
+
+WordPress veterans who build with AI, not around it.
+
+### Development tools
+- **ACF Pro** — Custom field architecture
+- **VS Code** — Precision code editing
+- **Cursor** — AI-native development
+- **Claude** — Intelligent pair programming
+- **GitHub** — Version control and deploy
+
+---
+
+## Contact
+
+**Your next project starts with a conversation.**
+
+Tell us what you need. We'll respond within 24 hours with an initial assessment. No commitment, no fine print.
+
+Contact form: https://tamandua-software.com/#contact
+
+Fields: name, email, company (optional), message.
+
+---
+
+*© 2026 Tamandua Software*
