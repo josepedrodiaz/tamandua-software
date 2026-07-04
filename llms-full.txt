@@ -1,118 +1,83 @@
 # Tamandua Software
 
 **URL:** https://tamandua-software.com/
-**Tagline:** Custom WordPress Development
-**Contact:** https://tamandua-software.com/#contact
+**Format:** The site is a single-page letter from the studio.
+**Contact:** https://tamandua-software.com/#contact — josepedrodiaz@gmail.com
 
-> Tamandua Software is a custom WordPress development studio. We build themes, plugins, and full websites from scratch for companies that need real engineering — not templates. AI-assisted pipeline, clean code, direct communication.
-
----
-
-## Hero
-
-**Your business deserves more than a template.**
-
-We build custom WordPress themes, plugins, and full websites for companies that demand real results — not off-the-shelf solutions.
-
-- 100% custom code
-- Response time under 24 hours
-
-CTA: [Start your project](https://tamandua-software.com/#contact)
+> Tamandua Software is a custom WordPress development studio in Buenos Aires, run by two senior engineers since 2010. Themes, plugins and full platforms built from scratch, with an AI reviewer integrated into the development pipeline.
 
 ---
 
-## Built with
+## Full site content
 
-WordPress · WooCommerce · ACF Pro · PHP 8 · REST API
+Buenos Aires
 
----
+### A letter from a small WordPress studio.
 
-## Services
+Hello. We're Tamandua — two engineers in Buenos Aires, building WordPress since 2010. This page is the whole pitch: what we do, how we work, and where to write if you want to work together.
 
-Every project is built from the ground up, architected around your specific business needs.
+### What we build
 
-### 1. Custom themes
-WordPress themes designed and developed from scratch, tailored to your brand identity. No page builder bloat. Clean, maintainable code.
+Three things, mostly.
 
-### 2. Bespoke plugins
-Purpose-built functionality for your operations, integrated with your actual workflow. No bloated all-in-one tools doing everything poorly.
+Custom themes, built from scratch to fit the brand, and written so the next developer can open the code and get straight to work.
 
-### 3. Full websites
-From planning to launch. Optimised for performance, SEO, and scalability. Built to grow with your business.
+Plugins that do one job well. When your workflow needs something WordPress doesn't do out of the box, we build that piece, document it, and wire it into what you already run.
 
----
+And when the project calls for it, whole platforms — architecture, build, launch, support — with performance, SEO and accessibility built in from the first commit.
 
-## Showcase
+### The unreasonable jobs (scroll-driven interlude)
 
-- **Performance-first** — Every site scores 90+ on Core Web Vitals.
-- **Clean code** — Standards-compliant and documented.
+By now you may be thinking this all sounds a bit… small. It isn't.
 
----
+We also do the unreasonable jobs. Ultra-migrations: forty million rows moved live, no downtime, a rollback plan written and rehearsed but never used. Architectures with teeth: one codebase serving six brands in four languages with a single deploy. Scale: Black Friday on WooCommerce at 12× normal traffic, zero errors. And rescues: legacy PHP brought from 5.6 to 8.3 while staying in production, 214 plugins audited down to 12.
 
-## Process
+…and then we make it look this simple again. That's the whole point.
 
-No surprises. No fine print. Full visibility at every stage.
+### How we work
 
-1. **Listen** — We understand your business, your users, and your goals. No proposal without first understanding the real problem.
-2. **Propose** — Clear technical solution, defined scope, realistic timeline, transparent budget.
-3. **Build** — Short review cycles so you see progress and give feedback at every stage. Your project never moves blind.
-4. **Support** — We launch with thorough testing and train your team. Then we stay available for what comes next.
+We listen before we quote. The first call is about your business and what's actually getting in the way. Then you get a proposal in plain language: what we'll build, how long it takes, what it costs. If a smaller project would serve you better, we'll tell you — talking someone into more than they need is how you end up working with them only once.
 
----
+While we build, you can watch. Work lands on a staging site every few days, so you're never a month in the dark wondering what's going on. And you talk directly with the two people writing the code. No account manager, no flights on your invoice for what could've been a Google Meet. Just the work.
 
-## Why Tamandua
+When we launch, you get documentation, training for your team, and a clean handover path. If you ever decide to take the work in-house, it goes with you. That's the deal.
 
-Named after the tamandua — an animal that finds precisely what it needs with remarkable efficiency. That's how we work.
+### The AI part
 
-- **Technical precision** — We identify the exact solution for each problem. No detours, no unnecessary complexity. Every technical decision has a clear rationale.
-- **Code that lasts** — Documented, clean, standards-compliant. If another team needs to pick it up, they can — without drama.
-- **Direct communication** — You talk to the developers who build your project. No account managers, no middlemen, no noise.
-- **Global quality, fair pricing** — Latin America-based team with international standards. Top-tier talent, smart investment.
+We should be upfront about this, because it's a real part of how we work: we use AI all day, and we've gotten good at it.
 
----
+Every commit gets reviewed by the two of us plus an AI reviewer in the pipeline, roughly like having a third engineer on call. It flags things earlier and catches regressions faster. The code is still ours. We just ship it about three times faster than we used to, and fewer bugs make it to production.
 
-## Team
+If AI tooling makes you uneasy, we're probably not your studio. We've spent the last few years learning to use it well without losing the plot, and we'd rather tell you that up front.
 
-### Pedro Diaz — Senior Full-Stack Developer
-15+ years building platforms for the Clinton Foundation, Women's Refugee Commission, ProZ.com, and Buenos Aires government. Former university professor. WordPress, PHP, Laravel, JavaScript.
+### What it costs
 
-### Oderay Ferrer — Developer & Analyst
-Studying Programmer Analyst at UNLP. Java, Spring, JavaScript, SQL. Bringing fresh perspective and relentless curiosity to every project.
+We're in Argentina, so senior work here costs less than it would from a studio in Berlin or Austin — same quality, cheaper cost of living. We quote a fixed price per project after the first conversation, and it doesn't move.
 
----
+### Write to us
 
-## How we build — Smarter tools. Sharper code.
+Tell us what you're trying to build. A line or twenty, both work. We reply within a business day, and if we're not the right fit we'll say so and try to point you somewhere better. We only take a couple of projects at a time, so it's worth writing early.
 
-We integrate AI directly into our development pipeline. Every project benefits from AI-assisted code review, architecture planning, and accelerated iteration.
+Contact form fields: name, email, company (optional), message.
 
-### Core platform
-- **WordPress** — Enterprise content at scale
-- **PHP 8** — Modern server-side performance
-- **MySQL** — Reliable structured data
-- **JavaScript** — Dynamic frontend behavior
-- **Vue.js** — Reactive component interfaces
+Pedro Díaz
+Tamandua Software, Buenos Aires
+josepedrodiaz@gmail.com
 
-WordPress veterans who build with AI, not around it.
-
-### Development tools
-- **ACF Pro** — Custom field architecture
-- **VS Code** — Precision code editing
-- **Cursor** — AI-native development
-- **Claude** — Intelligent pair programming
-- **GitHub** — Version control and deploy
+P.S. This site is a single HTML file, no framework, barely any JavaScript. View source — it's roughly how we build everything: as simple as the job lets us get away with.
 
 ---
 
-## Contact
+## Tech stack
 
-**Your next project starts with a conversation.**
+Core platform: WordPress, PHP 8, MySQL, JavaScript, Vue.js
+Pipeline: ACF Pro, Cursor, Claude, GitHub
 
-Tell us what you need. We'll respond within 24 hours with an initial assessment. No commitment, no fine print.
+## Quick facts
 
-Contact form: https://tamandua-software.com/#contact
-
-Fields: name, email, company (optional), message.
-
----
-
-*© 2026 Tamandua Software*
+- Studio: Buenos Aires, Argentina, working with clients worldwide
+- Founded: 2010, two senior engineers
+- Reply window: within one business day
+- Availability: a couple of projects at a time; write early
+- Pricing: fixed price per project, quoted after the first conversation
+- Portfolio: https://josepedrodiaz.com

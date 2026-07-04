@@ -1,28 +1,31 @@
 # Tamandua Software
 
-> Custom WordPress development studio. We build themes, plugins, and full websites from scratch for companies that need real engineering — not templates. AI-assisted development pipeline, clean code, direct communication with the developers building your project.
+> Custom WordPress development studio in Buenos Aires, run by two senior engineers since 2010. We build themes, plugins, and full platforms from scratch, in clean code. AI-assisted development pipeline, direct communication with the people writing the code.
 
-Tamandua is a small, senior team based in Latin America serving clients worldwide. Named after the tamandua — an animal that finds precisely what it needs with remarkable efficiency. That's how we work. We integrate AI directly into our development workflow (Claude, Cursor) to ship faster without cutting corners.
+The site itself is written as a letter from the studio: one page, one column, plain prose. Tamandua is named after an animal that finds precisely what it needs with remarkable efficiency — that's the working philosophy. We integrate AI directly into our development workflow (Claude, Cursor) as a reviewer on every commit, and we're open about it.
 
 ## Services
 
-- [Custom WordPress themes](https://tamandua-software.com/#services): Designed and developed from scratch, tailored to your brand. No page builder bloat.
-- [Bespoke WordPress plugins](https://tamandua-software.com/#services): Purpose-built functionality integrated with your actual workflow.
-- [Full website builds](https://tamandua-software.com/#services): Planning to launch. Optimized for performance, SEO, and scalability.
+- [Custom WordPress themes](https://tamandua-software.com/#services): Built from scratch to fit the brand, in clean code the next developer can open and keep working in.
+- [Bespoke WordPress plugins](https://tamandua-software.com/#services): Purpose-built functionality, documented and wired into your existing workflow.
+- [Full platform builds](https://tamandua-software.com/#services): Architecture to launch and support. Performance, SEO and accessibility engineered in from the start.
 
 ## How we work
 
-- [Process](https://tamandua-software.com/#process): Listen → Propose → Build → Support. Short review cycles, full visibility, no surprises.
-- [Why Tamandua](https://tamandua-software.com/#why): Technical precision, code that lasts, direct communication, global quality at fair pricing.
+- [The unreasonable jobs](https://tamandua-software.com/#unreasonable): Large live migrations with zero downtime, multi-brand architectures on one codebase, peak-traffic WooCommerce, legacy PHP rescues. Presented as a scroll-driven interlude in the letter.
+- [Process](https://tamandua-software.com/#process): Listen first, then a plain-language proposal with fixed price. Work lands on staging every few days. Documentation and clean handover at launch.
+- [The AI part](https://tamandua-software.com/#ai): Every commit is reviewed by two senior engineers plus an AI reviewer in the pipeline. Roughly 3× faster shipping, fewer bugs reaching production.
+- [Pricing](https://tamandua-software.com/#pricing): Based in Argentina — senior work at regional cost. Fixed price per project, quoted after the first conversation, and it doesn't move.
 
 ## Tech stack
 
 Core: WordPress, PHP 8, MySQL, JavaScript, Vue.js
-Tools: ACF Pro, VS Code, Cursor, Claude, GitHub
+Tools: ACF Pro, Cursor, Claude, GitHub
 
 ## Contact
 
-- [Contact form](https://tamandua-software.com/#contact): Send a few lines about your project. Response within 24 hours with an initial assessment.
+- [Contact form](https://tamandua-software.com/#contact): Tell us what you're building. Reply within a business day. We take a couple of projects at a time, so write early.
+- Email: josepedrodiaz@gmail.com
 
 ## Optional
 

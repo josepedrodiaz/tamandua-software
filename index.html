@@ -3,1567 +3,888 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamandua — Senior WordPress, sharpened by a modern pipeline.</title>
+<title>Tamandua Software — a WordPress studio in Buenos Aires</title>
+<meta name="description" content="Two engineers in Buenos Aires building custom WordPress themes, plugins and platforms since 2010. This page is the whole pitch.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  --paper:#F2EDE3;
-  --paper-deep:#EBE4D4;
-  --paper-light:#F7F2E8;
-  --espresso:#1F1A14;
-  --espresso-soft:#4A4036;
-  --espresso-faint:rgba(31,26,20,0.52);
-  --line:rgba(31,26,20,0.1);
-  --line-strong:rgba(31,26,20,0.22);
-  --accent:#E5512A;          /* hot terracota · italics en títulos siempre, hover principal */
-  --accent-deep:#C03A18;
-  --accent-2:#1F3AE8;        /* ultramarino eléctrico · focus, detalles editorial */
-  --accent-2-deep:#1428B5;
+  --paper:#FBF9F3;
+  --ink:#211F1A;
+  --ink-soft:#55503F;
+  --rule:#D9D2BF;
+  --link:#1D44A8;
+  --link-visited:#5B3E8F;
 }
 
-html{scroll-behavior:smooth;background:var(--paper)}
+html{background:var(--paper);overflow-x:hidden}
 
 body{
-  font-family:'Inter Tight', -apple-system, system-ui, sans-serif;
+  font-family:'Newsreader', Georgia, 'Times New Roman', serif;
   background:var(--paper);
-  color:var(--espresso);
-  font-size:16.5px;
-  line-height:1.55;
-  font-weight:400;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  font-feature-settings:"ss01" on, "cv11" on;
+  color:var(--ink);
+  font-size:19.5px;
+  line-height:1.62;
+  padding:0 24px;
 }
 
-::selection{background:var(--accent);color:var(--paper-light)}
-
-/* paper grain */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:9998;
-  opacity:0.06;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
+.letter{
+  max-width:620px;
+  margin:0 auto;
+  padding:72px 0 96px;
 }
 
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes drawLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-
-/* ─── IMAGES: B&N en reposo → full color al hover ─── */
-.tinted{
-  display:block;width:100%;height:100%;
-  object-fit:cover;
-  filter:grayscale(100%) contrast(1.05) brightness(0.94);
-  transition:filter 0.7s cubic-bezier(.65,0,.35,1), transform 1.4s cubic-bezier(.65,0,.35,1);
-}
-.tinted-wrap{
-  position:relative;overflow:hidden;
-  background:var(--paper-deep);
-}
-.tinted-wrap:hover .tinted{
-  filter:none;
-  transform:scale(1.04);
-}
-.tinted-wrap::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg, rgba(31,26,20,0) 60%, rgba(31,26,20,0.35) 100%);
-  pointer-events:none;
-  opacity:1;transition:opacity 0.6s ease;
-}
-.tinted-wrap:hover::after{opacity:0.3}
-
-a{color:inherit}
-
-/* ─── NAV ─── */
-nav{
-  position:sticky;top:0;z-index:60;
-  background:rgba(242,237,227,0.85);
-  backdrop-filter:blur(20px) saturate(1.2);
-  -webkit-backdrop-filter:blur(20px) saturate(1.2);
-  border-bottom:1px solid var(--line);
-  padding:22px 48px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:3rem;
-}
-.brand{
-  display:flex;align-items:baseline;gap:12px;
-  text-decoration:none;color:var(--espresso);
-}
-.brand-name{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-weight:400;
-  font-size:28px;
-  letter-spacing:-0.015em;
-  line-height:1;
-}
-.brand-sub{
-  font-family:'Inter Tight', sans-serif;
-  font-size:11.5px;
-  color:var(--espresso-faint);
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  font-weight:500;
-}
-
-.nav-links{
-  display:flex;gap:2.2rem;justify-content:center;
-  font-size:14.5px;
-  list-style:none;
-}
-.nav-links a{
-  color:var(--espresso);text-decoration:none;
-  position:relative;padding:6px 0;
-  transition:color 0.25s ease;
-}
-.nav-links a::after{
-  content:'';position:absolute;left:0;right:0;bottom:2px;
-  height:1px;background:var(--accent);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.35s cubic-bezier(.65,0,.35,1);
-}
-.nav-links a:hover{color:var(--accent)}
-.nav-links a:hover::after{transform:scaleX(1)}
-
-.nav-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  background:transparent;
-  color:var(--espresso);
-  font-size:14px;font-weight:500;
-  padding:11px 20px;
-  border:1px solid var(--espresso);
-  border-radius:999px;
-  text-decoration:none;
-  transition:background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-.nav-cta:hover{background:var(--accent);border-color:var(--accent);color:var(--paper-light)}
-.nav-cta .arr{transition:transform 0.3s ease}
-.nav-cta:hover .arr{transform:translateX(3px)}
-
-/* ─── HERO ─── */
-.hero{
-  position:relative;
-  padding:100px 48px 140px;
-  border-bottom:1px solid var(--line);
-}
-.hero-inner{
-  max-width:1480px;margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 360px;
-  gap:80px;
-  align-items:end;
-}
-
-.hero-meta{
-  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
-  margin-bottom:56px;
-  font-size:13px;
-  color:var(--espresso-soft);
-  opacity:0;animation:rise 0.9s 0.1s forwards;
-}
-.hero-meta .ix{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:15px;
-  color:var(--espresso);
-}
-.hero-meta .sep{color:var(--espresso-faint)}
-
-.hero h1{
-  font-family:'Inter Tight', sans-serif;
-  font-weight:400;
-  font-size:clamp(56px, 8.4vw, 148px);
-  line-height:0.92;
-  letter-spacing:-0.04em;
-  margin-bottom:64px;
-  color:var(--espresso);
-  max-width:16ch;
-}
-.hero h1 .line{display:block;opacity:0;animation:rise 0.9s forwards}
-.hero h1 .line:nth-child(1){animation-delay:0.18s}
-.hero h1 .line:nth-child(2){animation-delay:0.32s}
-.hero h1 .line:nth-child(3){animation-delay:0.46s}
-
-.hero h1 em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-weight:400;
-  color:var(--accent);
-  letter-spacing:-0.005em;
-  transition:color 0.6s ease, transform 0.6s ease;
-  display:inline-block;
-}
-.hero h1 em:hover{color:var(--accent-2);transform:translateY(-2px)}
-
-.hero-body{
-  max-width:560px;
-  font-size:18.5px;
-  line-height:1.55;
-  color:var(--espresso-soft);
-  margin-bottom:52px;
-  opacity:0;animation:rise 0.9s 0.6s forwards;
-}
-.hero-body em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  color:var(--accent);
-}
-
-.hero-cta-row{
-  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
-  opacity:0;animation:rise 0.9s 0.75s forwards;
-}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:12px;
-  background:var(--espresso);color:var(--paper-light);
-  font-size:15.5px;font-weight:500;
-  padding:17px 28px;
-  border-radius:999px;
-  text-decoration:none;
-  border:1px solid var(--espresso);
-  transition:background 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(.34,1.5,.64,1);
-}
-.btn-primary:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
-.btn-primary .arr{transition:transform 0.3s ease}
-.btn-primary:hover .arr{transform:translate(3px,-1px)}
-
-.btn-quiet{
-  display:inline-flex;align-items:center;gap:10px;
-  background:transparent;color:var(--espresso);
-  font-size:15px;font-weight:500;
-  padding:17px 0;
-  text-decoration:none;
-  position:relative;
-}
-.btn-quiet::after{
-  content:'';position:absolute;left:0;right:0;bottom:6px;
-  height:1px;background:var(--espresso-faint);
-  transition:background 0.3s ease, transform 0.3s ease;
-  transform-origin:left;
-}
-.btn-quiet:hover{color:var(--accent)}
-.btn-quiet:hover::after{background:var(--accent)}
-
-/* hero side */
-.hero-side{
-  display:flex;flex-direction:column;gap:0;
-  opacity:0;animation:rise 0.9s 0.4s forwards;
-}
-.hero-image{
-  aspect-ratio:4/5;
-  margin-bottom:32px;
-  border-radius:2px;
-}
-.hero-image .tinted-caption{
-  position:absolute;left:18px;bottom:14px;
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:13px;color:var(--paper-light);
-  z-index:2;letter-spacing:0.01em;
-  opacity:0.85;
-}
-.hero-fact-list{border-top:1px solid var(--line)}
-.hero-fact{
-  padding:24px 0;
-  border-bottom:1px solid var(--line);
-  display:grid;
-  grid-template-columns:1fr auto;
+.letterhead{
+  display:flex;
+  justify-content:space-between;
   align-items:baseline;
-  gap:18px;
-  transition:padding 0.3s ease;
-}
-.hero-fact:hover{padding-left:14px}
-.hero-fact .label{
-  font-size:12px;
-  color:var(--espresso-faint);
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-  font-weight:500;
-  transition:color 0.3s ease;
-}
-.hero-fact:hover .label{color:var(--accent)}
-.hero-fact .v{
-  font-family:'Inter Tight', sans-serif;
-  font-size:34px;font-weight:400;
-  line-height:1;letter-spacing:-0.035em;
-  color:var(--espresso);
-}
-.hero-fact .v em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  color:var(--accent);
-  transition:color 0.3s ease;
-}
-.hero-fact:hover .v em{color:var(--accent-2)}
-.hero-fact .v sup{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:14px;color:var(--espresso-soft);
-  position:relative;top:-14px;left:1px;
-}
-
-/* ─── DIVIDER + SECTION HEAD ─── */
-.section{
-  padding:140px 48px;
-  border-bottom:1px solid var(--line);
-}
-.section-inner{max-width:1480px;margin:0 auto}
-
-.section-eyebrow{
-  display:flex;align-items:center;gap:14px;
-  font-size:12.5px;
-  color:var(--espresso-faint);
-  text-transform:uppercase;
-  letter-spacing:0.14em;
-  margin-bottom:64px;
-  font-weight:500;
-}
-.section-eyebrow .num{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
+  gap:6px 16px;
+  flex-wrap:wrap;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:56px;
   font-size:15px;
-  color:var(--espresso);
-  text-transform:none;
-  letter-spacing:0;
+  color:var(--ink-soft);
 }
-.section-eyebrow .line{
-  flex:1;height:1px;background:var(--line-strong);
-  max-width:200px;
+.letterhead .name{
+  color:var(--ink);
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  font-size:14px;
 }
 
-.section-head{
-  display:grid;
-  grid-template-columns:1.5fr 1fr;
-  gap:80px;
-  align-items:end;
-  margin-bottom:90px;
-}
-.section-title{
-  font-family:'Inter Tight', sans-serif;
-  font-size:clamp(48px, 6.6vw, 108px);
-  font-weight:400;
-  line-height:0.96;
-  letter-spacing:-0.04em;
-  color:var(--espresso);
-  max-width:18ch;
-}
-.section-title em{
-  font-family:'Instrument Serif', serif;
+.dateline{
+  text-align:right;
   font-style:italic;
-  font-weight:400;
-  color:var(--accent);
-}
-.section-lede{
-  font-size:17.5px;line-height:1.55;color:var(--espresso-soft);
-  padding-bottom:8px;max-width:42ch;
+  color:var(--ink-soft);
+  font-size:17px;
+  margin-bottom:40px;
 }
 
-/* ─── SERVICES — three columns, geometric ─── */
-.svc-row{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  border-top:1px solid var(--line);
-}
-.svc{
-  padding:40px 36px 36px 0;
-  border-right:1px solid var(--line);
-  display:flex;flex-direction:column;
-  position:relative;
-  text-decoration:none;color:inherit;
-  min-height:380px;
-  transition:padding-left 0.4s cubic-bezier(.65,0,.35,1);
-}
-.svc:last-child{border-right:none;padding-right:0}
-.svc:nth-child(2),.svc:nth-child(3){padding-left:36px}
-.svc:hover{padding-left:50px}
-.svc:nth-child(1):hover{padding-left:14px}
-
-.svc-num{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;font-weight:400;
-  font-size:16px;color:var(--espresso-faint);
-  margin-bottom:auto;
-  transition:color 0.3s ease;
-}
-.svc:hover .svc-num{color:var(--accent)}
-
-.svc h3{
-  font-family:'Inter Tight', sans-serif;
-  font-size:38px;font-weight:400;
-  letter-spacing:-0.03em;line-height:1.04;
-  margin-top:80px;margin-bottom:16px;
-  color:var(--espresso);
-}
-.svc h3 em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;font-weight:400;
-  color:var(--accent);
-  transition:color 0.4s ease;
-}
-.svc:hover h3 em{color:var(--accent-2)}
-
-.svc p{
-  font-size:15.5px;line-height:1.6;color:var(--espresso-soft);
-  max-width:38ch;margin-bottom:32px;
-}
-.svc-foot{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:auto;
-  padding-top:18px;
-  border-top:1px solid var(--line);
-}
-.svc-foot .tag{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:14px;color:var(--espresso-soft);
-}
-.svc-arrow{
-  font-family:'Inter Tight', sans-serif;
-  font-size:18px;color:var(--espresso);
-  transition:transform 0.3s ease, color 0.3s ease;
-}
-.svc:hover .svc-arrow{transform:translateX(6px);color:var(--accent)}
-
-/* ─── STUDIO STRIP (image gallery, B&N → color) ─── */
-.studio-strip{
-  padding:24px 48px 100px;
-  border-bottom:1px solid var(--line);
-}
-.studio-inner{
-  max-width:1480px;margin:0 auto;
-}
-.studio-head{
-  display:flex;justify-content:space-between;align-items:baseline;
+h1{
+  font-weight:500;
+  font-size:clamp(28px, 5.4vw, 38px);
+  line-height:1.22;
+  letter-spacing:-0.01em;
   margin-bottom:36px;
-  gap:40px;
+}
+
+h2{
+  font-weight:600;
+  font-size:21.5px;
+  line-height:1.3;
+  margin:60px 0 18px;
+}
+
+p{margin-bottom:1.15em}
+p:last-child{margin-bottom:0}
+
+em{font-style:italic}
+
+a{
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+}
+a:visited{color:var(--link-visited)}
+a:hover{color:var(--ink)}
+a[href^="mailto:"]{overflow-wrap:anywhere}
+
+::selection{background:#E8E0C8}
+
+.asterism{
+  text-align:center;
+  letter-spacing:0.7em;
+  color:var(--ink-soft);
+  margin:56px 0;
+  font-size:17px;
+}
+
+/* the tear — mid-letter interlude.
+   Static by default (no JS / reduced motion); .js-tear enables the scroll-driven version.
+   The world is signal-fluo: acts alternate full fluo fields (ink-black type)
+   with carbon fields (glowing fluo type). A grain-dissolve canvas swaps the fields. */
+.t-outro{margin-top:44px;font-size:21px;line-height:1.45}
+
+.t-dark{
+  background:#17171A;color:#F5EFE0;
+  margin:52px calc(50% - 50vw);
+  padding:72px 24px;
+  position:relative;overflow:hidden;
+}
+.t-inner{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+.tk{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13.5px;margin-bottom:14px}
+.tb{font-size:clamp(30px,6vw,58px);font-weight:500;line-height:1.08;letter-spacing:-0.02em;margin-bottom:0}
+.tl{margin-top:18px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:14px;line-height:2.05}
+.tl p{margin:0}
+
+/* act palettes — static mode shows every act's fluo on carbon */
+.act-b{color:#FF4D00}
+.act-c{color:#B6FF00}
+.act-d{color:#CFFF04}
+.act-e{color:#00E8FF}
+.act-f{color:#FF3DCC}
+.t-grid,.t-stream,.t-net,.t-counter,.t-bg,.t-vignette{display:none}
+
+/* the invite — a plain letter screen you scroll through before the interlude locks */
+.tear-intro{
+  min-height:86vh;
+  display:flex;flex-direction:column;justify-content:center;gap:14px;
+}
+.tear-intro .ti-a{
+  font-size:clamp(24px,3.4vw,33px);line-height:1.28;margin:0;
+}
+.tear-intro .ti-b{
+  font-style:italic;color:var(--ink-soft);margin:0;
+  font-size:clamp(20px,2.7vw,26px);
+}
+
+/* scroll-trigger anchor (blank paper when idle, so we keep it short to minimise the
+   gap you pass on the way up); the stage itself is a full-viewport fixed overlay.
+   entry rises + fades in; exit lifts + fades out — no hard cut. */
+.js-tear .tear{height:56vh}
+.js-tear .tear-stage{
+  position:fixed;inset:0;overflow:hidden;z-index:50;
+  opacity:0;visibility:hidden;
+  transform:translateY(3vh);
+  transition:opacity 0.5s ease, transform 0.55s cubic-bezier(.22,.61,.36,1), visibility 0.5s;
+}
+.js-tear .tear.is-on .tear-stage{opacity:1;visibility:visible;transform:none}
+.js-tear .tear.is-exiting .tear-stage{
+  opacity:0;visibility:visible;
+  transform:translateY(-5vh);
+  transition:opacity 0.62s ease, transform 0.7s cubic-bezier(.22,.61,.36,1);
+}
+/* step dots — discrete-screen indicator */
+.js-tear .t-dots{
+  display:flex;position:absolute;right:26px;top:50%;z-index:8;
+  transform:translateY(-50%);
+  flex-direction:column;gap:12px;pointer-events:none;
+}
+.js-tear .t-dots i{
+  width:7px;height:7px;border-radius:50%;
+  background:currentColor;opacity:0.28;
+  transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.js-tear .t-dots i.on{opacity:1;transform:scale(1.5)}
+.tear-stage[data-mode="dark"] .t-dots{color:#F5EFE0}
+.tear-stage[data-mode="light"] .t-dots{color:#111008}
+/* scroll hint — fades after first step */
+.js-tear .t-hint{
+  position:absolute;left:50%;bottom:34px;z-index:8;
+  transform:translateX(-50%);
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:11px;letter-spacing:0.28em;text-transform:uppercase;
+  opacity:0.5;transition:opacity 0.5s ease;
+}
+.tear-stage[data-mode="dark"] .t-hint{color:#F5EFE0}
+.tear-stage[data-mode="light"] .t-hint{color:#111008}
+.js-tear .t-hint span{display:inline-block;animation:hintbob 1.9s ease-in-out infinite}
+.js-tear .t-hint.gone{opacity:0}
+@keyframes hintbob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.t-hint{display:none}
+.js-tear .t-hint{display:block}
+.t-dots{display:none}
+.js-tear .t-dots{display:flex}
+.js-tear .t-bg{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.js-tear .t-outro{
+  position:absolute;left:50%;top:50%;margin:0;opacity:0;z-index:6;
+  transform:translate(-50%,-50%);
+  width:min(620px,calc(100vw - 48px));
+  will-change:transform,opacity;
+}
+.js-tear .t-dark{position:absolute;inset:0;margin:0;padding:0;overflow:hidden;background:transparent}
+.js-tear .t-inner{position:static;max-width:none;display:block}
+.js-tear .t-slide{
+  position:absolute;left:50%;top:50%;z-index:3;
+  transform:translate(-50%,-50%);
+  width:min(720px,calc(100vw - 48px));
+  opacity:0;
+  will-change:transform,opacity;
+}
+/* on fluo-field acts the type goes ink-black — the canvas provides the color */
+.js-tear .act-b,.js-tear .act-d{color:#111008}
+/* glow only where there's carbon to burn against */
+.js-tear .act-c .tb{text-shadow:0 0 26px rgba(182,255,0,.35)}
+.js-tear .act-e .tb{text-shadow:0 0 26px rgba(0,232,255,.35)}
+.js-tear .act-f .tb{text-shadow:0 0 26px rgba(255,61,204,.35)}
+.js-tear .t-grid{display:block;position:absolute;inset:0;z-index:1;opacity:0}
+.tear-stage[data-mode="dark"] .t-grid{
+  background-image:linear-gradient(rgba(245,239,224,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(245,239,224,.08) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.tear-stage[data-mode="light"] .t-grid{
+  background-image:linear-gradient(rgba(17,16,8,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(17,16,8,.16) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.js-tear .t-stream{
+  display:block;position:absolute;top:-14%;z-index:1;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:12.5px;line-height:2.1;
+  opacity:0;margin:0;white-space:pre;
+  will-change:transform,opacity;
+}
+.tear-stage[data-mode="dark"] .t-stream{color:rgba(245,239,224,.30)}
+.tear-stage[data-mode="light"] .t-stream{color:rgba(17,16,8,.42)}
+.t-stream-l{left:3vw}
+.t-stream-r{right:3vw;text-align:right}
+.js-tear .t-counter{
+  display:block;position:absolute;left:50%;top:50%;z-index:1;
+  transform:translate(-50%,-50%);
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:clamp(56px,13vw,170px);
+  color:rgba(182,255,0,.13);
+  letter-spacing:-0.03em;white-space:nowrap;
+  opacity:0;pointer-events:none;
+}
+.js-tear .t-net{
+  display:block;position:absolute;inset:0;width:100%;height:100%;
+  z-index:2;pointer-events:none;
+}
+.js-tear .t-vignette{
+  display:block;position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.5) 100%);
+}
+.js-tear .t-outro{text-align:center;font-size:clamp(20px,3vw,28px)}
+@media (max-width:560px){
+  .js-tear .t-stream{display:none}
+}
+
+/* form */
+form{margin-top:32px}
+.field{margin-bottom:22px}
+label{
+  display:block;
+  font-size:16px;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+input[type="text"], input[type="email"], textarea{
+  width:100%;
+  font-family:inherit;
+  font-size:17.5px;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  padding:10px 12px;
+}
+input:focus, textarea:focus{
+  outline:none;
+  border-color:var(--ink-soft);
+}
+textarea{min-height:140px;resize:vertical}
+button{
+  font-family:inherit;
+  font-size:17px;
+  color:var(--paper);
+  background:var(--ink);
+  border:1px solid var(--ink);
+  border-radius:3px;
+  padding:11px 26px;
+  cursor:pointer;
+}
+button:hover{background:var(--ink-soft);border-color:var(--ink-soft)}
+
+.signature{
+  margin-top:56px;
+  line-height:1.5;
+}
+.signature .who{font-weight:600}
+.signature .role{color:var(--ink-soft);font-size:17px}
+
+.ps{
+  margin-top:44px;
+  padding-top:28px;
+  border-top:1px solid var(--rule);
+  font-size:17.5px;
+  color:var(--ink-soft);
+}
+
+footer{
+  max-width:620px;
+  margin:0 auto;
+  padding:20px 0 48px;
+  border-top:1px solid var(--rule);
+  font-size:14.5px;
+  color:var(--ink-soft);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
   flex-wrap:wrap;
 }
-.studio-head .label{
-  font-size:12.5px;color:var(--espresso-faint);
-  text-transform:uppercase;letter-spacing:0.14em;
-  font-weight:500;
-  display:flex;align-items:center;gap:14px;
-}
-.studio-head .label::before{
-  content:'';width:24px;height:1px;background:var(--accent);
-}
-.studio-head .caption{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:17px;color:var(--espresso-soft);
-  max-width:48ch;
-}
-.studio-head .caption em{
-  font-style:normal;
-  font-family:'Inter Tight', sans-serif;
-  font-weight:500;
-  color:var(--accent);
-}
-.studio-grid{
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr;
-  gap:14px;
-  height:520px;
-}
-.studio-grid .tinted-wrap{
-  position:relative;
-}
-.studio-card{
-  position:relative;overflow:hidden;
-  border-radius:2px;
-  height:100%;
-}
-.studio-card .num{
-  position:absolute;top:18px;left:20px;
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:13px;color:var(--paper-light);
-  z-index:3;letter-spacing:0.05em;
-}
-.studio-card .meta{
-  position:absolute;bottom:20px;left:20px;right:20px;
-  z-index:3;color:var(--paper-light);
-  display:flex;justify-content:space-between;align-items:end;gap:18px;
-}
-.studio-card .meta .t{
-  font-family:'Inter Tight', sans-serif;
-  font-size:18px;font-weight:500;line-height:1.1;
-  letter-spacing:-0.015em;
-}
-.studio-card .meta .t em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;color:var(--accent);
-  font-weight:400;
-}
-.studio-card .meta .yr{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:13px;opacity:0.7;
-}
+footer a{color:inherit}
 
-/* ─── NUMBERS STRIP ─── */
-.numbers-section{
-  padding:120px 48px;
-  border-bottom:1px solid var(--line);
-}
-.numbers-inner{
-  max-width:1480px;margin:0 auto;
-  display:grid;
-  grid-template-columns:1.3fr 1fr 1fr 1fr;
-  gap:60px;
-  align-items:end;
-}
-.numbers-headline{
-  font-family:'Inter Tight', sans-serif;
-  font-weight:400;
-  font-size:clamp(34px, 4vw, 56px);
-  line-height:1.02;
-  letter-spacing:-0.035em;
-  color:var(--espresso);
-  max-width:14ch;
-}
-.numbers-headline em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  color:var(--accent);
-}
-.num-stat{
-  border-top:1px solid var(--line-strong);
-  padding-top:22px;
-  transition:border-color 0.3s ease;
-}
-.num-stat:hover{border-color:var(--accent)}
-.num-stat .v{
-  font-family:'Inter Tight', sans-serif;
-  font-size:64px;font-weight:400;
-  line-height:1;letter-spacing:-0.04em;
-  color:var(--espresso);
-  display:flex;align-items:baseline;gap:2px;
-}
-.num-stat .v em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  color:var(--accent);
-  transition:color 0.4s ease;
-}
-.num-stat:hover .v em{color:var(--accent-2)}
-.num-stat .l{
-  margin-top:14px;
-  font-size:13.5px;
-  color:var(--espresso-soft);
-  line-height:1.45;max-width:22ch;
-}
-
-/* ─── PROCESS — editorial timeline ─── */
-.process-grid{
-  display:grid;
-  grid-template-columns:200px 1fr;
-  gap:80px;
-}
-.process-rail{
-  position:sticky;top:120px;
-  align-self:start;
-}
-.process-rail .lbl{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:17px;
-  color:var(--espresso);
-  margin-bottom:14px;
-}
-.process-rail .sub{
-  font-size:13.5px;color:var(--espresso-soft);line-height:1.5;
-}
-
-.process-list{
-  display:flex;flex-direction:column;
-  border-top:1px solid var(--line);
-}
-.phase{
-  display:grid;
-  grid-template-columns:100px 1fr;
-  gap:48px;
-  padding:48px 0;
-  border-bottom:1px solid var(--line);
-  align-items:start;
-  transition:padding-left 0.4s cubic-bezier(.65,0,.35,1);
-}
-.phase:hover{padding-left:24px}
-
-.phase-num{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-weight:400;
-  font-size:72px;
-  line-height:0.9;
-  letter-spacing:-0.03em;
-  color:var(--accent);
-  transition:color 0.4s ease, transform 0.4s ease;
-}
-.phase:hover .phase-num{color:var(--accent-2);transform:translateX(-6px)}
-
-.phase-body h3{
-  font-family:'Inter Tight', sans-serif;
-  font-size:32px;font-weight:400;
-  letter-spacing:-0.025em;line-height:1.1;
-  margin-bottom:14px;color:var(--espresso);
-}
-.phase-body h3 em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;color:var(--accent);
-}
-.phase-body .lbl{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:15px;color:var(--espresso-soft);
-  margin-bottom:18px;display:block;
-}
-.phase-body p{
-  font-size:16px;line-height:1.65;color:var(--espresso-soft);
-  margin-bottom:22px;
-  max-width:54ch;
-}
-.phase-tags{
-  display:flex;flex-wrap:wrap;gap:10px;
-}
-.phase-tags span{
-  font-size:12.5px;
-  padding:6px 14px;
-  border:1px solid var(--line-strong);
-  border-radius:999px;
-  color:var(--espresso-soft);
-  transition:border-color 0.25s ease, color 0.25s ease;
-}
-.phase-tags span:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ─── WHY ─── */
-.why-grid{
-  display:grid;
-  grid-template-columns:1.1fr 1fr;
-  gap:100px;
-  align-items:start;
-}
-.why-pull{
-  position:sticky;top:120px;
-}
-.why-quote{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:clamp(38px, 4.2vw, 66px);
-  font-weight:400;
-  line-height:1.1;
-  letter-spacing:-0.018em;
-  color:var(--espresso);
-  margin-bottom:36px;
-  position:relative;
-}
-.why-quote::before{
-  content:'';
-  display:block;
-  width:48px;height:1px;
-  background:var(--espresso);
-  margin-bottom:36px;
-}
-.why-quote em{
-  font-style:normal;
-  font-family:'Inter Tight', sans-serif;
-  font-weight:400;
-  color:var(--accent);
-  position:relative;
-  display:inline-block;
-}
-.why-quote em::after{
-  content:'';
-  position:absolute;left:0;right:0;bottom:0.12em;
-  height:0.16em;background:var(--accent-2);
-  opacity:0;
-  transform:scaleX(0);transform-origin:left;
-  transition:opacity 0.4s ease, transform 0.6s cubic-bezier(.65,0,.35,1);
-}
-.why-quote em:hover::after{opacity:0.55;transform:scaleX(1)}
-.why-byline{
-  font-size:12.5px;color:var(--espresso-faint);
-  display:flex;align-items:center;gap:14px;
-  text-transform:uppercase;letter-spacing:0.12em;
-  font-weight:500;
-}
-.why-byline::before{
-  content:'';width:28px;height:1px;background:var(--espresso-faint);
-}
-
-.why-list{
-  border-top:1px solid var(--line);
-  display:flex;flex-direction:column;
-}
-.why-item{
-  border-bottom:1px solid var(--line);
-  padding:32px 0;
-  cursor:pointer;
-  position:relative;
-  transition:padding-left 0.4s cubic-bezier(.65,0,.35,1);
-}
-.why-item:hover{padding-left:18px}
-.why-head{
-  display:flex;align-items:center;justify-content:space-between;gap:24px;
-}
-.why-head .ix{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:14px;
-  color:var(--espresso-faint);
-  width:34px;flex-shrink:0;
-  transition:color 0.3s ease;
-}
-.why-item:hover .why-head .ix{color:var(--accent)}
-.why-title{
-  font-family:'Inter Tight', sans-serif;
-  font-size:24px;font-weight:400;
-  letter-spacing:-0.02em;line-height:1.2;
-  color:var(--espresso);
-  flex:1;
-}
-.why-title em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;font-weight:400;
-  color:var(--accent);
-  transition:color 0.3s ease;
-}
-.why-item:hover .why-title em{color:var(--accent-2)}
-.why-toggle{
-  font-family:'Inter Tight', sans-serif;
-  font-size:20px;
-  color:var(--espresso);
-  width:24px;text-align:right;
-  transition:transform 0.3s ease, color 0.3s ease;
-}
-.why-item.open .why-toggle{transform:rotate(45deg);color:var(--accent)}
-.why-body{
-  overflow:hidden;max-height:0;opacity:0;
-  margin-left:58px;
-  transition:max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
-}
-.why-item.open .why-body{max-height:260px;opacity:1;margin-top:18px}
-.why-body p{
-  font-size:15.5px;line-height:1.65;color:var(--espresso-soft);
-  max-width:54ch;
-}
-
-/* ─── STACK ─── */
-.stack-section .section-head{margin-bottom:60px}
-.stack-row{
-  display:grid;
-  grid-template-columns:200px 1fr;
-  gap:80px;
-  padding:32px 0;
-  border-top:1px solid var(--line);
-  align-items:start;
-}
-.stack-row:last-child{border-bottom:1px solid var(--line)}
-.stack-label{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:17px;
-  color:var(--espresso);
-}
-.stack-label .sub{
-  display:block;font-family:'Inter Tight',sans-serif;
-  font-style:normal;font-size:12px;
-  color:var(--espresso-faint);
-  margin-top:8px;text-transform:uppercase;letter-spacing:0.1em;font-weight:500;
-}
-.stack-items{
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:14px;
-}
-.tech{
-  padding:18px 0;
-  border-bottom:1px solid var(--line);
-  display:flex;flex-direction:column;gap:6px;
-  text-decoration:none;color:inherit;
-  position:relative;
-  transition:padding-left 0.3s ease;
-}
-.tech:hover{padding-left:10px}
-.tech::before{
-  content:'';position:absolute;left:0;top:18px;
-  width:0;height:14px;background:var(--accent);
-  transition:width 0.3s ease;
-}
-.tech:hover::before{width:3px}
-.tech-name{
-  font-family:'Inter Tight', sans-serif;
-  font-weight:500;font-size:17px;
-  color:var(--espresso);
-  letter-spacing:-0.015em;
-  display:flex;justify-content:space-between;align-items:baseline;
-}
-.tech-name .v{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-weight:400;
-  font-size:13px;
-  color:var(--espresso-faint);
-  transition:color 0.3s ease;
-}
-.tech:hover .tech-name .v{color:var(--accent)}
-.tech-role{
-  font-size:13px;color:var(--espresso-soft);line-height:1.4;
-}
-
-.stack-coda{
-  margin-top:90px;
-  padding-top:48px;
-  border-top:1px solid var(--line);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:80px;
-  align-items:start;
-}
-.stack-coda-quote{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:clamp(28px, 3.3vw, 44px);
-  font-weight:400;
-  line-height:1.18;
-  letter-spacing:-0.015em;
-  color:var(--espresso);
-  max-width:24ch;
-}
-.stack-coda-quote em{
-  font-style:normal;
-  font-family:'Inter Tight', sans-serif;
-  font-weight:500;
-  color:var(--accent);
-  position:relative;display:inline-block;
-}
-.stack-coda-quote em::after{
-  content:'';
-  position:absolute;left:0;right:0;bottom:0.06em;
-  height:0.18em;background:var(--accent-2);opacity:0;
-  transform:scaleX(0);transform-origin:left;
-  transition:opacity 0.4s ease, transform 0.5s cubic-bezier(.65,0,.35,1);
-}
-.stack-coda-quote em:hover::after{opacity:0.55;transform:scaleX(1)}
-.stack-coda-note{
-  font-size:15px;line-height:1.6;color:var(--espresso-soft);max-width:42ch;
-}
-
-/* ─── CTA ─── */
-.cta{
-  padding:180px 48px;
-  border-bottom:1px solid var(--line);
-  text-align:center;
-}
-.cta-inner{max-width:1100px;margin:0 auto}
-.cta-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-size:12.5px;font-weight:500;
-  color:var(--espresso-faint);
-  text-transform:uppercase;letter-spacing:0.14em;
-  margin-bottom:48px;
-}
-.cta-eyebrow::before, .cta-eyebrow::after{
-  content:'';width:24px;height:1px;background:var(--espresso-faint);
-}
-.cta h2{
-  font-family:'Inter Tight', sans-serif;
-  font-weight:400;
-  font-size:clamp(60px, 8.4vw, 144px);
-  line-height:0.94;
-  letter-spacing:-0.045em;
-  margin-bottom:48px;
-  color:var(--espresso);
-  max-width:18ch;margin-left:auto;margin-right:auto;
-}
-.cta h2 em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;font-weight:400;
-  color:var(--accent);
-}
-.cta p{
-  max-width:560px;margin:0 auto 56px;
-  font-size:17.5px;line-height:1.55;color:var(--espresso-soft);
-}
-
-/* ─── CONTACT ─── */
-.contact-section{
-  padding:140px 48px;
-  border-bottom:1px solid var(--line);
-}
-.contact-grid{
-  max-width:1480px;margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:100px;
-  align-items:start;
-}
-.contact-left h2{
-  font-family:'Inter Tight', sans-serif;
-  font-size:clamp(48px, 6vw, 92px);
-  font-weight:400;
-  line-height:0.96;
-  letter-spacing:-0.04em;
-  color:var(--espresso);
-  margin-bottom:28px;
-}
-.contact-left h2 em{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;font-weight:400;color:var(--accent);
-}
-.contact-intro{
-  font-size:17px;line-height:1.6;color:var(--espresso-soft);
-  max-width:42ch;margin-bottom:48px;
-}
-.contact-meta{
-  display:flex;flex-direction:column;
-  border-top:1px solid var(--line);
-}
-.contact-row{
-  display:flex;justify-content:space-between;gap:20px;
-  padding:18px 0;
-  border-bottom:1px solid var(--line);
-  font-size:14.5px;
-}
-.contact-row .l{color:var(--espresso-faint);font-weight:500}
-.contact-row .v{color:var(--espresso);font-weight:500}
-.contact-row .v em{
-  font-family:'Instrument Serif', serif;font-style:italic;
-  font-weight:400;color:var(--accent);
-}
-.contact-row a{
-  color:var(--espresso);text-decoration:none;
-  border-bottom:1px solid transparent;
-  transition:color 0.25s ease, border-color 0.25s ease;
-}
-.contact-row a:hover{color:var(--accent);border-bottom-color:var(--accent)}
-
-.contact-form{
-  display:flex;flex-direction:column;gap:30px;
-  padding-top:8px;
-}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.form-field{display:flex;flex-direction:column;gap:8px}
-.form-field label{
-  font-size:12.5px;color:var(--espresso-faint);font-weight:500;
-  text-transform:uppercase;letter-spacing:0.1em;
-}
-.form-field label .opt{
-  text-transform:none;letter-spacing:0;
-  font-family:'Instrument Serif', serif;font-style:italic;
-  color:var(--espresso-faint);font-weight:400;
-}
-.form-field input, .form-field textarea{
-  background:transparent;
-  border:none;
-  border-bottom:1px solid var(--line-strong);
-  padding:14px 0;
-  font-family:'Inter Tight', sans-serif;
-  font-size:17px;color:var(--espresso);
-  outline:none;
-  transition:border-color 0.3s ease;
-}
-.form-field input::placeholder, .form-field textarea::placeholder{color:var(--espresso-faint);opacity:0.7}
-.form-field input:focus, .form-field textarea:focus{border-color:var(--accent-2)}
-.form-field textarea{resize:vertical;min-height:120px;font-family:'Inter Tight',sans-serif}
-
-.form-submit{
-  align-self:flex-start;
-  display:inline-flex;align-items:center;gap:12px;
-  background:var(--espresso);color:var(--paper-light);
-  font-family:'Inter Tight', sans-serif;
-  font-size:15px;font-weight:500;
-  padding:17px 28px;border:1px solid var(--espresso);
-  border-radius:999px;
-  cursor:pointer;
-  transition:background 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(.34,1.5,.64,1);
-  margin-top:12px;
-}
-.form-submit:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
-.form-submit .arr{transition:transform 0.3s ease}
-.form-submit:hover .arr{transform:translate(3px,-1px)}
-
-/* ─── FOOTER ─── */
-footer{
-  padding:80px 48px 32px;
-  background:var(--paper);
-}
-.footer-grid{
-  max-width:1480px;margin:0 auto;
-  display:grid;
-  grid-template-columns:2.2fr 1fr 1fr 1fr;
-  gap:60px;
-  padding-bottom:60px;
-  border-bottom:1px solid var(--line);
-}
-.footer-brand h3{
-  font-family:'Instrument Serif', serif;
-  font-style:italic;
-  font-size:36px;font-weight:400;
-  line-height:1.1;letter-spacing:-0.015em;
-  margin-bottom:20px;
-  color:var(--espresso);
-}
-.footer-brand p{
-  font-size:14.5px;line-height:1.6;color:var(--espresso-soft);
-  max-width:38ch;
-}
-.footer-col h5{
-  font-family:'Inter Tight', sans-serif;
-  font-size:12px;font-weight:500;
-  color:var(--espresso-faint);
-  margin-bottom:18px;
-  text-transform:uppercase;letter-spacing:0.12em;
-}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.footer-col a{
-  color:var(--espresso);text-decoration:none;font-size:14.5px;
-  position:relative;display:inline-block;
-}
-.footer-col a::after{
-  content:'';position:absolute;left:0;right:0;bottom:-2px;
-  height:1px;background:var(--accent);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.3s ease;
-}
-.footer-col a:hover::after{transform:scaleX(1)}
-.footer-col a:hover{color:var(--accent)}
-
-.footer-bottom{
-  max-width:1480px;margin:24px auto 0;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:12.5px;color:var(--espresso-faint);
-}
-.footer-bottom em{
-  font-family:'Instrument Serif', serif;font-style:italic;
-  color:var(--accent);
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1100px){
-  .hero-inner{grid-template-columns:1fr;gap:60px}
-  .section-head{grid-template-columns:1fr;gap:24px;margin-bottom:60px}
-  .svc-row{grid-template-columns:1fr;border-top:1px solid var(--line)}
-  .svc{border-right:none;border-bottom:1px solid var(--line);padding:36px 0 36px 0 !important;min-height:auto}
-  .svc:nth-child(2),.svc:nth-child(3){padding-left:0 !important}
-  .svc h3{margin-top:24px}
-  .numbers-inner{grid-template-columns:1fr 1fr;gap:32px}
-  .numbers-headline{grid-column:span 2}
-  .process-grid{grid-template-columns:1fr;gap:40px}
-  .process-rail{position:static}
-  .phase{grid-template-columns:70px 1fr;gap:28px}
-  .phase-num{font-size:54px}
-  .why-grid{grid-template-columns:1fr;gap:60px}
-  .why-pull{position:static}
-  .stack-row{grid-template-columns:1fr;gap:28px}
-  .stack-items{grid-template-columns:repeat(3, 1fr)}
-  .stack-coda{grid-template-columns:1fr;gap:32px}
-  .contact-grid{grid-template-columns:1fr;gap:50px}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
-  nav{grid-template-columns:auto auto;gap:20px;padding:18px 24px}
-  .nav-links{display:none}
-}
-@media (max-width:680px){
-  .hero{padding:60px 24px 80px}
-  .section{padding:90px 24px}
-  .numbers-section{padding:80px 24px}
-  .numbers-inner{grid-template-columns:1fr 1fr;gap:24px}
-  .numbers-headline{grid-column:span 2}
-  .stack-items{grid-template-columns:1fr 1fr}
-  .contact-section{padding:90px 24px}
-  .form-row{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr;gap:32px;padding-bottom:40px}
-  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
-  .cta{padding:120px 24px}
-  footer{padding:60px 24px 28px}
-  .phase-body h3{font-size:26px}
-  .phase{padding:36px 0}
+@media (max-width:560px){
+  body{font-size:18px}
+  .letter{padding:48px 0 72px}
+  .letterhead{margin-bottom:40px}
+  h2{margin-top:48px}
 }
 </style>
 </head>
 <body>
 
-<!-- Nav -->
-<nav>
-  <a href="#" class="brand">
-    <span class="brand-name">tamandua</span>
-    <span class="brand-sub">— Software · Est. 2010</span>
-  </a>
+<main class="letter">
 
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#why">Why us</a></li>
-    <li><a href="#stack">Pipeline</a></li>
-  </ul>
-
-  <a href="#contact" class="nav-cta">
-    Start a project <span class="arr">→</span>
-  </a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-meta">
-        <span class="ix">— Buenos Aires</span>
-        <span class="sep">/</span>
-        <span>A small WordPress studio with a modern, AI-augmented engineering pipeline.</span>
-      </div>
-
-      <h1>
-        <span class="line">Senior WordPress,</span>
-        <span class="line"><em>sharpened</em></span>
-        <span class="line">by a modern pipeline.</span>
-      </h1>
-
-      <p class="hero-body">
-        Two engineers, fifteen years of practice, a development pipeline with AI as a real second reviewer on every commit. We build <em>custom WordPress</em> sites, plugins and platforms for companies that want their site to actually fit them — not the other way around.
-      </p>
-
-      <div class="hero-cta-row">
-        <a href="#contact" class="btn-primary">Start a project <span class="arr">→</span></a>
-        <a href="#process" class="btn-quiet">How we work ↓</a>
-      </div>
-    </div>
-
-    <aside class="hero-side">
-      <div class="tinted-wrap hero-image">
-        <img class="tinted" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80" alt="Studio at work — code on screen">
-        <span class="tinted-caption">— Buenos Aires studio</span>
-      </div>
-      <div class="hero-fact-list">
-        <div class="hero-fact">
-          <div>
-            <div class="label">Years of practice</div>
-          </div>
-          <div class="v">15<em>+</em></div>
-        </div>
-        <div class="hero-fact">
-          <div>
-            <div class="label">Pipeline reviewers</div>
-          </div>
-          <div class="v">2<sup>+1</sup></div>
-        </div>
-        <div class="hero-fact">
-          <div>
-            <div class="label">First-reply window</div>
-          </div>
-          <div class="v">&lt;24<em>h</em></div>
-        </div>
-      </div>
-    </aside>
+  <div class="letterhead">
+    <span class="name">Tamandua Software</span>
+    <span>WordPress, since 2010</span>
   </div>
-</section>
 
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="section-inner">
-    <div class="section-eyebrow">
-      <span class="num">01</span>
-      <span>What we build</span>
-      <span class="line"></span>
+  <p class="dateline">Buenos Aires</p>
+
+  <h1>A letter from a small WordPress studio.</h1>
+
+  <p>Hello. We're Tamandua — two engineers in Buenos Aires, building WordPress since 2010. This page is the whole pitch: what we do, how we work, and where to write if you want to work together.</p>
+
+  <h2 id="services">What we build</h2>
+
+  <p>Three things, mostly.</p>
+
+  <p>Custom themes, built from scratch to fit the brand, and written so the next developer can open the code and get straight to work.</p>
+
+  <p>Plugins that do one job well. When your workflow needs something WordPress doesn't do out of the box, we build that piece, document it, and wire it into what you already run.</p>
+
+  <p>And when the project calls for it, whole platforms — architecture, build, launch, support — with performance, SEO and accessibility built in from the first commit.</p>
+
+  <section class="tear-intro">
+    <p class="ti-a">By now you may be thinking this all sounds a bit… small.</p>
+    <p class="ti-b">It isn't. Keep scrolling.</p>
+  </section>
+
+  <section class="tear" id="unreasonable" aria-label="The unreasonable jobs">
+      <div class="tear-stage">
+
+        <canvas class="t-bg" aria-hidden="true"></canvas>
+
+        <div class="t-dark">
+          <div class="t-grid" aria-hidden="true"></div>
+          <pre class="t-stream t-stream-l" aria-hidden="true">$ wp db export --live
+rows: 40,118,204
+chunk 0812 / 2048 ok
+chunk 0813 / 2048 ok
+chunk 0814 / 2048 ok
+diff: clean
+replicas: in sync
+lag: 0.3s
+switchover: 03:14:07Z
+downtime: 0ms
+rollback: armed
+rollback: not needed
+$ tail -f prod.log
+p95: 210ms
+p99: 340ms
+errors: 0
+cache hit: 98.2%
+queue depth: 0
+workers: 12/12 healthy
+$ git push prod main
+hooks: passing
+tests: 1,412 green
+deploy: 41s
+$ wp db export --live
+rows: 40,118,204
+chunk 1201 / 2048 ok
+diff: clean
+downtime: 0ms
+uptime: 99.99%</pre>
+          <pre class="t-stream t-stream-r" aria-hidden="true">deploy #1042 → prod
+6 brands / 1 codebase
+4 languages
+1 deploy
+php 5.6 → 8.3
+plugins: 214 → 12
+cwv: 96 / 98 / 100
+uptime: 99.99%
+schema v41 → v42
+migrations: forward-only
+feature flags: 7 live
+peak: 12× normal traffic
+error rate: 0.00%
+carts: fine
+deploy #1043 → prod
+rollbacks this year: 0
+crons: 38 scheduled
+alerts tonight: none
+6 brands / 1 codebase
+php 5.6 → 8.3
+plugins: 214 → 12
+cwv: 96 / 98 / 100
+uptime: 99.99%</pre>
+          <div class="t-counter" aria-hidden="true">0</div>
+
+          <div class="t-inner">
+            <div class="t-slide act-b">
+              <p class="tk">the part nobody puts in a letter</p>
+              <p class="tb">We also do the unreasonable jobs.</p>
+            </div>
+
+            <div class="t-slide act-c">
+              <p class="tk">ultra-migrations</p>
+              <p class="tb">Forty million rows, moved live.</p>
+              <div class="tl">
+                <p>downtime: none</p>
+                <p>rollback plan: written, rehearsed, never used</p>
+                <p>the client watched it from a dashboard we'd shipped the week before</p>
+              </div>
+            </div>
+
+            <div class="t-slide act-d">
+              <p class="tk">architectures with teeth</p>
+              <p class="tb">One codebase. Six brands. One deploy.</p>
+              <div class="tl">
+                <p>multisite mesh, four languages, shared design system</p>
+                <p>p95 response: 210ms under real traffic</p>
+              </div>
+            </div>
+
+            <div class="t-slide act-e">
+              <p class="tk">scale</p>
+              <p class="tb">Black Friday on WooCommerce. Nothing fell over.</p>
+              <div class="tl">
+                <p>peak: 12× normal traffic</p>
+                <p>error rate: zero</p>
+                <p>infra bill the next month: the same</p>
+              </div>
+            </div>
+
+            <div class="t-slide act-f">
+              <p class="tk">rescues</p>
+              <p class="tb">Legacy PHP older than your newest employee. We take those too.</p>
+              <div class="tl">
+                <p>php 5.6 → 8.3, in production the whole time</p>
+                <p>214 plugins audited. 12 survived.</p>
+              </div>
+            </div>
+          </div>
+          <div class="t-vignette" aria-hidden="true"></div>
+        </div>
+
+        <canvas class="t-net" aria-hidden="true"></canvas>
+
+        <p class="t-outro"><em>…and then we make it look this simple again.</em><br>That's the whole point.</p>
+
+        <div class="t-dots" aria-hidden="true"></div>
+        <div class="t-hint" aria-hidden="true"><span>scroll ↓</span></div>
+
+      </div>
+  </section>
+
+  <h2 id="process">How we work</h2>
+
+  <p>We listen before we quote. The first call is about your business and what's actually getting in the way. Then you get a proposal in plain language: what we'll build, how long it takes, what it costs. If a smaller project would serve you better, we'll tell you — talking someone into more than they need is how you end up working with them only once.</p>
+
+  <p>While we build, you can watch. Work lands on a staging site every few days, so you're never a month in the dark wondering what's going on. And you talk directly with the two people writing the code. No account manager, no flights on your invoice for what could've been a Google Meet. Just the work.</p>
+
+  <p>When we launch, you get documentation, training for your team, and a clean handover path. If you ever decide to take the work in-house, it goes with you. That's the deal.</p>
+
+  <h2 id="ai">The AI part</h2>
+
+  <p>We should be upfront about this, because it's a real part of how we work: we use AI all day, and we've gotten good at it.</p>
+
+  <p>Every commit gets reviewed by the two of us plus an AI reviewer in the pipeline, roughly like having a third engineer on call. It flags things earlier and catches regressions faster. The code is still ours. We just ship it about three times faster than we used to, and fewer bugs make it to production.</p>
+
+  <p>If AI tooling makes you uneasy, we're probably not your studio. We've spent the last few years learning to use it well without losing the plot, and we'd rather tell you that up front.</p>
+
+  <h2 id="pricing">What it costs</h2>
+
+  <p>We're in Argentina, so senior work here costs less than it would from a studio in Berlin or Austin — same quality, cheaper cost of living. We quote a fixed price per project after the first conversation, and it doesn't move.</p>
+
+  <div class="asterism">*&nbsp;*&nbsp;*</div>
+
+  <h2 id="contact">Write to us</h2>
+
+  <p>Tell us what you're trying to build. A line or twenty, both work. We reply within a business day, and if we're not the right fit we'll say so and try to point you somewhere better. We only take a couple of projects at a time, so it's worth writing early.</p>
+
+  <form action="https://formspree.io/f/mredeyon" method="POST">
+    <input type="hidden" name="_subject" value="New inquiry from tamandua-software.com">
+    <input type="hidden" name="_next" value="https://tamandua-software.com/?sent=1#contact">
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+    <div class="field">
+      <label for="f-name">Your name</label>
+      <input type="text" id="f-name" name="name" required>
     </div>
 
-    <div class="section-head">
-      <h2 class="section-title">Three things,<br><em>built sharp.</em></h2>
-      <p class="section-lede">Every project is engineered from the ground up around your actual constraints. No page-builder lock-in, no template surgery, no compromise on what's underneath.</p>
+    <div class="field">
+      <label for="f-email">Email</label>
+      <input type="email" id="f-email" name="email" required>
     </div>
 
-    <div class="svc-row">
-      <a href="#contact" class="svc">
-        <div class="svc-num">— Service 01</div>
-        <div>
-          <h3>Custom <em>themes</em></h3>
-          <p>Brand-true WordPress themes built from scratch. Clean, semantic, maintainable code that another developer can read, extend, and ship without archaeology.</p>
-        </div>
-        <div class="svc-foot">
-          <span class="tag">Theme architecture</span>
-          <span class="svc-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="#contact" class="svc">
-        <div class="svc-num">— Service 02</div>
-        <div>
-          <h3>Bespoke <em>plugins</em></h3>
-          <p>Purpose-built functionality that lives inside your real workflow. Lean, integrated, documented — not another all-in-one suite that does everything badly.</p>
-        </div>
-        <div class="svc-foot">
-          <span class="tag">Plugin engineering</span>
-          <span class="svc-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="#contact" class="svc">
-        <div class="svc-num">— Service 03</div>
-        <div>
-          <h3>Full <em>platforms</em></h3>
-          <p>From first sketch to launch and beyond. Performance, SEO, accessibility, scalability — engineered in, not bolted on after the fact.</p>
-        </div>
-        <div class="svc-foot">
-          <span class="tag">End-to-end</span>
-          <span class="svc-arrow">→</span>
-        </div>
-      </a>
+    <div class="field">
+      <label for="f-company">Company (optional)</label>
+      <input type="text" id="f-company" name="company">
     </div>
+
+    <div class="field">
+      <label for="f-message">What do you need?</label>
+      <textarea id="f-message" name="message" required></textarea>
+    </div>
+
+    <button type="submit">Send</button>
+  </form>
+
+  <div class="signature">
+    <p>
+      <span class="who">Pedro Díaz</span><br>
+      <span class="role">Tamandua Software, Buenos Aires</span><br>
+      <span class="role"><a href="mailto:josepedrodiaz@gmail.com">josepedrodiaz@gmail.com</a></span>
+    </p>
   </div>
-</section>
 
-<!-- STUDIO STRIP — B&N → color al hover -->
-<section class="studio-strip">
-  <div class="studio-inner">
-    <div class="studio-head">
-      <div class="label">— Recent work</div>
-      <p class="caption">A few from the last twelve months. Every project ships with <em>full documentation</em>, AI-augmented code review, and a clean handover path.</p>
-    </div>
+  <p class="ps">P.S. This site is a single HTML file, no framework, barely any JavaScript — except for the part where it lost its mind for a moment. You scrolled through that. It's roughly how we build everything: as simple as the job lets us get away with.</p>
 
-    <div class="studio-grid">
-      <div class="tinted-wrap studio-card">
-        <img class="tinted" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt="Dashboard interface design">
-        <span class="num">— 01</span>
-        <div class="meta">
-          <div class="t">Platform <em>rebuild</em></div>
-          <span class="yr">2025</span>
-        </div>
-      </div>
-      <div class="tinted-wrap studio-card">
-        <img class="tinted" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1000&q=80" alt="Custom plugin code">
-        <span class="num">— 02</span>
-        <div class="meta">
-          <div class="t">Custom <em>plugin</em></div>
-          <span class="yr">2025</span>
-        </div>
-      </div>
-      <div class="tinted-wrap studio-card">
-        <img class="tinted" src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=1000&q=80" alt="Studio workspace">
-        <span class="num">— 03</span>
-        <div class="meta">
-          <div class="t">Editorial <em>theme</em></div>
-          <span class="yr">2024</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+</main>
 
-<!-- NUMBERS STRIP -->
-<section class="numbers-section">
-  <div class="numbers-inner">
-    <h3 class="numbers-headline">Senior practice.<br><em>Modern</em> pipeline.</h3>
-    <div class="num-stat"><div class="v">15<em>+</em></div><div class="l">Years building WordPress at scale</div></div>
-    <div class="num-stat"><div class="v">3<em>×</em></div><div class="l">Faster from kickoff to ship vs. our pre-AI baseline</div></div>
-    <div class="num-stat"><div class="v">90<em>+</em></div><div class="l">Core Web Vitals score we ship by default</div></div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section class="section" id="process">
-  <div class="section-inner">
-    <div class="section-eyebrow">
-      <span class="num">02</span>
-      <span>How we work</span>
-      <span class="line"></span>
-    </div>
-
-    <div class="section-head">
-      <h2 class="section-title">Four phases.<br><em>No fine print.</em></h2>
-      <p class="section-lede">A predictable rhythm from first email through launch and into ongoing support. Short loops, visible progress, nothing happens behind your back.</p>
-    </div>
-
-    <div class="process-grid">
-      <div class="process-rail">
-        <div class="lbl">A small studio<br>with a long memory.</div>
-        <div class="sub">Linear. Transparent. Never blind. Same two people from kickoff to launch.</div>
-      </div>
-
-      <div class="process-list">
-        <div class="phase">
-          <div class="phase-num">01</div>
-          <div class="phase-body">
-            <span class="lbl">— Listen</span>
-            <h3>Understand <em>the actual problem.</em></h3>
-            <p>We dig into your business, your users, your goals before pitching anything. No proposal lands until we've understood the real constraint — pitching the wrong solution is just expensive theatre.</p>
-            <div class="phase-tags"><span>Discovery</span><span>Stakeholder map</span><span>Constraints</span></div>
-          </div>
-        </div>
-
-        <div class="phase">
-          <div class="phase-num">02</div>
-          <div class="phase-body">
-            <span class="lbl">— Propose</span>
-            <h3>Scope, timeline, <em>honest budget.</em></h3>
-            <p>Clear technical solution, realistic timeline, transparent pricing. If a smaller project would serve you better, we'll point you that way. No upselling, no surprise line items.</p>
-            <div class="phase-tags"><span>Architecture</span><span>Timeline</span><span>Budget</span></div>
-          </div>
-        </div>
-
-        <div class="phase">
-          <div class="phase-num">03</div>
-          <div class="phase-body">
-            <span class="lbl">— Build</span>
-            <h3>Short loops, <em>AI-augmented review.</em></h3>
-            <p>Sprints land every few days on staging. Two human engineers plus an AI reviewer on every commit — patterns caught earlier, regressions caught faster. You never wait a month to see what we've shipped.</p>
-            <div class="phase-tags"><span>Sprint loops</span><span>AI review</span><span>Staging access</span></div>
-          </div>
-        </div>
-
-        <div class="phase">
-          <div class="phase-num">04</div>
-          <div class="phase-body">
-            <span class="lbl">— Support</span>
-            <h3>Launch is <em>the start.</em></h3>
-            <p>We launch with thorough testing, document the codebase, and train your team. Handover-ready from day one — if you ever want to bring the work in-house, we hand it over cleanly.</p>
-            <div class="phase-tags"><span>QA</span><span>Documentation</span><span>Handover-ready</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY -->
-<section class="section" id="why">
-  <div class="section-inner">
-    <div class="section-eyebrow">
-      <span class="num">03</span>
-      <span>Why Tamandua</span>
-      <span class="line"></span>
-    </div>
-
-    <div class="section-head">
-      <h2 class="section-title">Named after a quiet,<br><em>precise animal.</em></h2>
-      <p class="section-lede">The tamandua finds exactly what it needs with remarkable efficiency. No detours, no chase. That's the working philosophy we built the studio on.</p>
-    </div>
-
-    <div class="why-grid">
-      <div class="why-pull">
-        <p class="why-quote">
-          We don't chase trends. We chase the thing that <em>actually works</em> — and we use every tool, AI included, to get there faster.
-        </p>
-        <div class="why-byline">Operating principle</div>
-      </div>
-
-      <div class="why-list">
-        <div class="why-item">
-          <div class="why-head">
-            <span class="ix">01 —</span>
-            <div class="why-title">Technical <em>precision</em></div>
-            <div class="why-toggle">+</div>
-          </div>
-          <div class="why-body">
-            <p>We identify the exact solution for each problem. No detours, no unnecessary complexity. Every technical decision has a rationale you can read and challenge — and a paper trail in the codebase.</p>
-          </div>
-        </div>
-
-        <div class="why-item">
-          <div class="why-head">
-            <span class="ix">02 —</span>
-            <div class="why-title">Code that <em>lasts</em></div>
-            <div class="why-toggle">+</div>
-          </div>
-          <div class="why-body">
-            <p>Documented, clean, standards-compliant. If another team picks it up tomorrow, they can — without archaeology, without drama, without a goodbye email from the previous developer.</p>
-          </div>
-        </div>
-
-        <div class="why-item">
-          <div class="why-head">
-            <span class="ix">03 —</span>
-            <div class="why-title">Direct <em>communication</em></div>
-            <div class="why-toggle">+</div>
-          </div>
-          <div class="why-body">
-            <p>You talk to the engineers writing the code. No account managers, no middlemen, no Slack threads with seven people who don't know what's going on. One channel, two humans, fast replies.</p>
-          </div>
-        </div>
-
-        <div class="why-item">
-          <div class="why-head">
-            <span class="ix">04 —</span>
-            <div class="why-title">Global standards, <em>regional pricing</em></div>
-            <div class="why-toggle">+</div>
-          </div>
-          <div class="why-body">
-            <p>Latin America-based studio operating at international standards. Senior engineering at a price that reflects where we live, not where you live. Smart investment, no guilt attached.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STACK -->
-<section class="section stack-section" id="stack">
-  <div class="section-inner">
-    <div class="section-eyebrow">
-      <span class="num">04</span>
-      <span>Our pipeline</span>
-      <span class="line"></span>
-    </div>
-
-    <div class="section-head">
-      <h2 class="section-title">Senior tooling.<br><em>AI in the loop.</em></h2>
-      <p class="section-lede">We integrate AI directly into our development pipeline — not as a gimmick, but as a real second pair of eyes on every commit. The human signature stays. Mistakes get caught earlier.</p>
-    </div>
-
-    <div class="stack-row">
-      <div class="stack-label">— The core platform<span class="sub">Battle-tested foundation</span></div>
-      <div class="stack-items">
-        <div class="tech"><div class="tech-name"><span>WordPress</span><span class="v">6.x</span></div><div class="tech-role">Content at scale</div></div>
-        <div class="tech"><div class="tech-name"><span>PHP</span><span class="v">8.3</span></div><div class="tech-role">Modern server-side</div></div>
-        <div class="tech"><div class="tech-name"><span>MySQL</span><span class="v">8.0</span></div><div class="tech-role">Reliable storage</div></div>
-        <div class="tech"><div class="tech-name"><span>JavaScript</span><span class="v">ES2024</span></div><div class="tech-role">Dynamic frontends</div></div>
-        <div class="tech"><div class="tech-name"><span>Vue.js</span><span class="v">3.x</span></div><div class="tech-role">Reactive UI</div></div>
-      </div>
-    </div>
-
-    <div class="stack-row">
-      <div class="stack-label">— The pipeline<span class="sub">Where AI lives</span></div>
-      <div class="stack-items">
-        <div class="tech"><div class="tech-name"><span>ACF Pro</span><span class="v">Pro</span></div><div class="tech-role">Custom fields</div></div>
-        <div class="tech"><div class="tech-name"><span>Cursor</span><span class="v">AI-native</span></div><div class="tech-role">Primary editor</div></div>
-        <div class="tech"><div class="tech-name"><span>Claude</span><span class="v">4.x</span></div><div class="tech-role">Pair programmer</div></div>
-        <div class="tech"><div class="tech-name"><span>GitHub</span><span class="v">CI/CD</span></div><div class="tech-role">Version & deploy</div></div>
-        <div class="tech"><div class="tech-name"><span>REST</span><span class="v">API</span></div><div class="tech-role">Integrations</div></div>
-      </div>
-    </div>
-
-    <div class="stack-coda">
-      <p class="stack-coda-quote">
-        WordPress veterans who build <em>with</em> AI, not around it.
-      </p>
-      <p class="stack-coda-note">Our pre-AI baseline still ships fine. Our current pipeline ships sharper, faster, and with fewer bugs reaching production — because two senior reviewers plus an AI reviewer catches more than any of them does alone.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-  <div class="cta-inner">
-    <div class="cta-eyebrow">Taking Q3 2026</div>
-    <h2>Your next project starts with a <em>conversation.</em></h2>
-    <p>Tell us what you need. We'll respond within a day with an honest initial assessment, a sense of scope, and a number. No pitch decks pretending to be meetings.</p>
-    <a href="#contact" class="btn-primary">Start a project <span class="arr">→</span></a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div class="contact-grid">
-    <div class="contact-left">
-      <h2>Get in <em>touch.</em></h2>
-      <p class="contact-intro">We read every message. We reply within a business day, honestly. Worst case, we tell you we're not the right fit — and try to point you somewhere that is.</p>
-      <div class="contact-meta">
-        <div class="contact-row"><span class="l">Studio</span><span class="v">Buenos Aires, Argentina</span></div>
-        <div class="contact-row"><span class="l">Email</span><span class="v"><a href="mailto:josepedrodiaz@gmail.com">josepedrodiaz@gmail.com</a></span></div>
-        <div class="contact-row"><span class="l">Reply window</span><span class="v">Within 24 hours</span></div>
-        <div class="contact-row"><span class="l">Availability</span><span class="v"><em>Taking Q3 / 2026</em></span></div>
-      </div>
-    </div>
-
-    <form class="contact-form" action="https://formspree.io/f/mredeyon" method="POST">
-      <input type="hidden" name="_subject" value="New inquiry from tamandua-software.com">
-      <input type="hidden" name="_next" value="https://tamandua-software.com/?sent=1#contact">
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-
-      <div class="form-row">
-        <div class="form-field">
-          <label>Your name</label>
-          <input type="text" name="name" required placeholder="What should we call you?">
-        </div>
-        <div class="form-field">
-          <label>Email</label>
-          <input type="email" name="email" required placeholder="you@yourcompany.com">
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label>Company <span class="opt">/ optional</span></label>
-        <input type="text" name="company" placeholder="Where you're writing from">
-      </div>
-
-      <div class="form-field">
-        <label>What do you need?</label>
-        <textarea name="message" required placeholder="A line or twenty — both work. We just want to understand what you're building."></textarea>
-      </div>
-
-      <button type="submit" class="form-submit">Send message <span class="arr">→</span></button>
-    </form>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <h3>Senior WordPress,<br>sharpened for 2026.</h3>
-      <p>Tamandua Software. A two-person studio in Buenos Aires building thoughtful, durable WordPress for companies that take how it's built seriously — and want it shipped fast.</p>
-    </div>
-    <div class="footer-col">
-      <h5>Studio</h5>
-      <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#why">Why us</a></li>
-        <li><a href="#stack">Pipeline</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Contact</h5>
-      <ul>
-        <li><a href="#contact">Start a project</a></li>
-        <li><a href="mailto:josepedrodiaz@gmail.com">josepedrodiaz@gmail.com</a></li>
-        <li><a href="https://josepedrodiaz.com" target="_blank" rel="noopener">Pedro's portfolio ↗</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Location</h5>
-      <ul>
-        <li><a href="#">Buenos Aires, AR</a></li>
-        <li><a href="#">Est. 2010</a></li>
-        <li><a href="#">2026 — v6</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Tamandua Software — <em>Buenos Aires.</em></span>
-    <span>Senior engineering, modern pipeline.</span>
-  </div>
+  <span>© 2026 Tamandua Software</span>
+  <span><a href="https://josepedrodiaz.com" target="_blank" rel="noopener">Pedro's portfolio</a></span>
 </footer>
 
 <script>
-  // why-row expand/collapse
-  const items = document.querySelectorAll('.why-item');
-  items[0]?.classList.add('open');
-  items.forEach(item => {
-    item.addEventListener('click', () => item.classList.toggle('open'));
-  });
+// dateline — always the current month, so it never goes stale
+(() => {
+  const dl = document.querySelector('.dateline');
+  if (dl) dl.textContent = 'Buenos Aires, ' + new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+})();
 
-  // smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      if (id.length > 1) {
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-      }
+(() => {
+  const tear = document.querySelector('.tear');
+  if (!tear || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js-tear');
+
+  const stage = tear.querySelector('.tear-stage');
+  const q = s => tear.querySelector(s);
+  const el = {
+    outro: q('.t-outro'),
+    grid: q('.t-grid'), sL: q('.t-stream-l'), sR: q('.t-stream-r'),
+    counter: q('.t-counter'), vig: q('.t-vignette'),
+    bg: q('.t-bg'), net: q('.t-net'),
+    dots: q('.t-dots'), hint: q('.t-hint')
+  };
+  const slides = [...tear.querySelectorAll('.t-slide')];
+
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const seg = (p, a, b) => clamp01((p - a) / (b - a));
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const mix = (a, b, t) => a + (b - a) * t;
+
+  // [fade-in start, fade-in end, fade-out start, fade-out end]
+  const W = [
+    [0.185, 0.250, 0.300, 0.355],
+    [0.330, 0.395, 0.445, 0.500],
+    [0.475, 0.540, 0.595, 0.650],
+    [0.620, 0.685, 0.735, 0.790],
+    [0.760, 0.825, 0.850, 0.890]
+  ];
+  const ROWS = 40118204;
+
+  const COLORS = { paper: [251, 249, 243], orange: [255, 77, 0], carbon: [23, 23, 26], lime: [207, 255, 4] };
+  const DARK = { paper: 0, orange: 0, carbon: 1, lime: 0 };
+  // [start, end, from, to, angle] — field swaps via a soft diagonal wipe
+  const BGT = [
+    [0.095, 0.200, 'paper', 'orange', -0.55],
+    [0.295, 0.375, 'orange', 'carbon', 2.35],
+    [0.445, 0.525, 'carbon', 'lime', 0.75],
+    [0.590, 0.670, 'lime', 'carbon', -2.0],
+    [0.895, 0.955, 'carbon', 'paper', 1.9]
+  ];
+
+  const ctx = el.bg.getContext('2d');
+  let VW = 0, VH = 0, DPR = 1;
+  function sizeBG() {
+    DPR = Math.min(devicePixelRatio || 1, 1.5);   // canvas is gradients + lines; 1.5 is plenty
+    VW = stage.clientWidth; VH = stage.clientHeight;
+    [el.bg, el.net].forEach(c => { c.width = VW * DPR; c.height = VH * DPR; });
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    nctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  function bgAt(p) {
+    let base = 'paper';
+    for (const [a, b, f, t, ang] of BGT) {
+      if (p < a) return { base, next: null, t: 0 };
+      if (p <= b) return { base: f, next: t, t: ease(seg(p, a, b)), ang };
+      base = t;
+    }
+    return { base, next: null, t: 0 };
+  }
+  function paintBG(s) {
+    const A = COLORS[s.base];
+    ctx.fillStyle = `rgb(${A[0]},${A[1]},${A[2]})`;
+    ctx.fillRect(0, 0, VW, VH);
+    if (!s.next || s.t <= 0) return;
+    // soft-edged diagonal wipe: the new color arrives as a feathered front,
+    // travelling along a per-transition angle. no pixels, modern gradient sweep.
+    const B = COLORS[s.next];
+    const dx = Math.cos(s.ang), dy = Math.sin(s.ang);
+    const cx = VW / 2, cy = VH / 2;
+    const half = Math.abs(dx) * VW / 2 + Math.abs(dy) * VH / 2;
+    const feather = 0.34 * half;              // blend band width, in px
+    const front = (s.t * 2 - 1) * (half + feather); // sweep the front fully across
+    const g = ctx.createLinearGradient(
+      cx + dx * (front - feather), cy + dy * (front - feather),
+      cx + dx * (front + feather), cy + dy * (front + feather)
+    );
+    g.addColorStop(0, `rgb(${B[0]},${B[1]},${B[2]})`);
+    g.addColorStop(1, `rgb(${A[0]},${A[1]},${A[2]})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, VW, VH);
+  }
+
+  // ── continuous constellation network ──
+  // one 9-node layout per act; nodes travel between layouts, edges follow.
+  const nctx = el.net.getContext('2d');
+  const NODES = 9;
+  function rng(seed) { return () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff; }
+  function layout(seed) {
+    const r = rng(seed), pts = [];
+    for (let i = 0; i < NODES; i++) pts.push([0.12 + r() * 0.76, 0.14 + r() * 0.72]);
+    // edges: connect each node to its ~2 nearest for an organic mesh
+    const edges = [];
+    for (let i = 0; i < NODES; i++) {
+      const d = pts.map((p, j) => [j, (p[0] - pts[i][0]) ** 2 + (p[1] - pts[i][1]) ** 2])
+        .filter(x => x[0] !== i).sort((a, b) => a[1] - b[1]);
+      for (let k = 0; k < 2; k++) { const j = d[k][0]; if (!edges.some(e => (e[0] === j && e[1] === i))) edges.push([i, j]); }
+    }
+    return { pts, edges };
+  }
+  const LAYOUTS = [11, 27, 43, 61, 83].map(layout);
+  // node phase drift so the mesh breathes even when parked on one act
+  const PH = Array.from({ length: NODES }, (_, i) => [i * 1.7, i * 2.3]);
+
+  // which two layouts are we between, and how far — mapped across the whole track
+  const NET_STOPS = [0.22, 0.40, 0.57, 0.72, 0.83]; // center of each act
+  function netAt(p) {
+    if (p <= NET_STOPS[0]) return { a: 0, b: 0, t: 0 };
+    if (p >= NET_STOPS[NET_STOPS.length - 1]) return { a: 4, b: 4, t: 0 };
+    for (let i = 0; i < NET_STOPS.length - 1; i++) {
+      if (p <= NET_STOPS[i + 1]) return { a: i, b: i + 1, t: ease(seg(p, NET_STOPS[i], NET_STOPS[i + 1])) };
+    }
+    return { a: 4, b: 4, t: 0 };
+  }
+  function drawNet(p, s, breathe) {
+    nctx.clearRect(0, 0, VW, VH);
+    const vis = ease(seg(p, 0.14, 0.24)) * (1 - ease(seg(p, 0.90, 0.955)));
+    if (vis <= 0.001) return;
+    const n = netAt(p);
+    const La = LAYOUTS[n.a], Lb = LAYOUTS[n.b], t = n.t;
+    // ink color follows the field polarity (dark type on fluo, fluo on carbon)
+    const key = s.next && s.t >= 0.5 ? s.next : s.base;
+    const onDark = DARK[key];
+    const line = onDark ? '245,239,224' : '17,16,8';
+    const P = [];
+    for (let i = 0; i < NODES; i++) {
+      const ax = La.pts[i][0], ay = La.pts[i][1], bx = Lb.pts[i][0], by = Lb.pts[i][1];
+      const dxb = Math.sin(breathe * 0.7 + PH[i][0]) * 0.012;
+      const dyb = Math.cos(breathe * 0.6 + PH[i][1]) * 0.012;
+      P.push([(mix(ax, bx, t) + dxb) * VW, (mix(ay, by, t) + dyb) * VH]);
+    }
+    // edges from both layouts, cross-faded — this is the "threads between slides"
+    nctx.lineWidth = 1.1;
+    function edgeSet(L, alpha) {
+      if (alpha <= 0.01) return;
+      nctx.strokeStyle = `rgba(${line},${(onDark ? 0.5 : 0.62) * alpha * vis})`;
+      nctx.beginPath();
+      for (const [i, j] of L.edges) { nctx.moveTo(P[i][0], P[i][1]); nctx.lineTo(P[j][0], P[j][1]); }
+      nctx.stroke();
+    }
+    edgeSet(La, 1 - t);
+    edgeSet(Lb, t);
+    // nodes
+    nctx.fillStyle = `rgba(${line},${(onDark ? 0.9 : 0.95) * vis})`;
+    for (let i = 0; i < NODES; i++) {
+      const big = i === 4 ? 3.4 : 2.4;
+      nctx.beginPath(); nctx.arc(P[i][0], P[i][1], big, 0, 7); nctx.fill();
+    }
+  }
+
+  function render(p, breathe) {
+    const s = bgAt(p);
+    paintBG(s);
+    const key = s.next && s.t >= 0.5 ? s.next : s.base;
+    stage.dataset.mode = DARK[key] ? 'dark' : 'light';
+    el.vig.style.opacity = s.next ? DARK[s.base] * (1 - s.t) + DARK[s.next] * s.t : DARK[s.base];
+
+    drawNet(p, s, breathe);
+
+    el.grid.style.opacity = 0.5 * ease(seg(p, 0.15, 0.23)) * (1 - ease(seg(p, 0.87, 0.91)));
+
+    const sv = ease(seg(p, 0.17, 0.25)) * (1 - ease(seg(p, 0.85, 0.89)));
+    const sy = (p - 0.5) * 520;
+    el.sL.style.opacity = sv; el.sL.style.transform = `translate3d(0,${-sy}px,0)`;
+    el.sR.style.opacity = sv; el.sR.style.transform = `translate3d(0,${sy}px,0)`;
+
+    slides.forEach((sl, ix) => {
+      const [a, b, c, d] = W[ix];
+      const i = ease(seg(p, a, b)), o = ease(seg(p, c, d));
+      sl.style.opacity = i * (1 - o);
+      sl.style.transform = `translate(-50%,-50%) translate3d(0,${(1 - i) * 48 - o * 42}px,0) scale(${0.965 + 0.035 * i - 0.02 * o})`;
+      sl.querySelectorAll('.tl p').forEach((ln, j) => {
+        const li = ease(seg(p, a + 0.03 + j * 0.022, b + 0.03 + j * 0.022));
+        ln.style.opacity = li * (1 - o);
+        ln.style.transform = `translate3d(0,${(1 - li) * 18}px,0)`;
+      });
     });
+
+    const ci = ease(seg(p, 0.33, 0.375)) * (1 - ease(seg(p, 0.465, 0.51)));
+    el.counter.style.opacity = ci;
+    if (ci > 0) el.counter.textContent = Math.round(ROWS * easeOut(seg(p, 0.335, 0.475))).toLocaleString('en-US');
+
+    const oi = ease(seg(p, 0.955, 0.99));
+    el.outro.style.opacity = oi;
+    el.outro.style.transform = `translate(-50%,-50%) translate3d(0,${(1 - oi) * 26}px,0)`;
+  }
+
+  // ── threshold-stepped interlude ──
+  // The interlude is a sequence of discrete full-screen states. A scroll gesture
+  // past a threshold triggers a self-contained animated jump to the next/prev
+  // screen; scroll position does NOT scrub the animation. While a jump plays,
+  // input is locked. At the ends, scrolling releases back to the letter.
+  const ANCHORS = [0.27, 0.42, 0.565, 0.71, 0.835, 0.99]; // p per screen (intro lives in the letter)
+  const ENTRY_P = 0.08;   // paper, just before the first wipe — entry animates from here
+  const LAST = ANCHORS.length - 1;
+  const DUR = 780;                 // ms per jump
+  const WHEEL_THRESH = 26, TOUCH_THRESH = 42;
+
+  // build step dots
+  ANCHORS.forEach(() => el.dots.appendChild(document.createElement('i')));
+  const dots = [...el.dots.children];
+  function paintDots() { dots.forEach((d, i) => d.classList.toggle('on', i === step)); }
+
+  let step = 0, curP = ANCHORS[0], clock = 0;
+  let engaged = false, busy = false, accum = 0;
+  let raf = null, animFrom = 0, animTo = 0, animStart = 0;
+  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, lastY = scrollY;
+
+  function loop(now) {
+    raf = null;
+    clock = now / 1000;
+    if (busy) {
+      const t = clamp01((now - animStart) / DUR);
+      curP = animFrom + (animTo - animFrom) * ease(t);
+      render(curP, clock);
+      if (t >= 1) { busy = false; cooldownUntil = now + 160; }
+      raf = requestAnimationFrame(loop);
+    } else if (engaged) {
+      render(curP, clock);           // idle: keep the mesh breathing
+      raf = requestAnimationFrame(loop);
+    }
+  }
+  function ensureLoop() { if (raf == null) raf = requestAnimationFrame(loop); }
+
+  function jump(to) {
+    animFrom = curP; animTo = ANCHORS[to];
+    animStart = performance.now(); busy = true; step = to;
+    paintDots();
+    el.hint.classList.add('gone');
+    ensureLoop();
+  }
+  function tryStep(dir) {
+    if (busy || performance.now() < cooldownUntil) return;
+    const next = step + dir;
+    if (next < 0) return release(-1);
+    if (next > LAST) return release(1);
+    jump(next);
+  }
+
+  // the stage is a fixed overlay, so its screen position doesn't depend on scrollY.
+  // entering from the top plays the paper→act colour wipe as it rises + fades in.
+  function engage(entry) {
+    if (engaged) return;
+    tear.classList.remove('is-exiting');
+    engaged = true; step = entry; accum = 0;
+    sizeBG();
+    tear.classList.add('is-on');
+    paintDots();
+    if (entry === 0) {                 // arriving from the letter → animate the wipe
+      curP = ENTRY_P;
+      animFrom = ENTRY_P; animTo = ANCHORS[0];
+      animStart = performance.now(); busy = true;
+    } else {
+      curP = ANCHORS[entry];
+      render(curP, performance.now() / 1000);
+    }
+    ensureLoop();
+  }
+  function release(dir) {
+    if (!engaged) return;
+    engaged = false; busy = false; accum = 0;
+    // smooth exit: the overlay lifts + fades away (is-exiting) revealing the letter
+    tear.classList.remove('is-on');
+    tear.classList.add('is-exiting');
+    setTimeout(() => tear.classList.remove('is-exiting'), 760);
+    const now = performance.now();
+    releaseUntil = now + 850;          // hysteresis: don't re-engage during the exit
+    absorbUntil = now + 620;           // eat leftover momentum through the reveal
+    const T = tear.offsetTop, H = tear.offsetHeight, vh = innerHeight;
+    // down → next section pinned to top; up → clearly back above the interlude
+    scrollTo(0, dir > 0 ? T + H : Math.max(0, T - vh * 0.55));
+    lastY = scrollY;
+    if (raf != null) { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  // input — one gesture = one step. absorb post-release momentum so the letter
+  // that's revealed on exit doesn't get scrolled away by leftover inertia.
+  function onWheel(e) {
+    const now = performance.now();
+    if (now < absorbUntil) { e.preventDefault(); return; }
+    if (!engaged) return;
+    e.preventDefault();
+    if (busy || now < cooldownUntil) {
+      accum = 0;
+      if (Math.abs(e.deltaY) > 6) cooldownUntil = Math.max(cooldownUntil, now + 130);
+      return;
+    }
+    accum += e.deltaY;
+    if (Math.abs(accum) >= WHEEL_THRESH) { const d = Math.sign(accum); accum = 0; tryStep(d); }
+  }
+  let touchY = null;
+  function onTouchStart(e) { if (engaged) touchY = e.touches[0].clientY; }
+  function onTouchMove(e) {
+    if (!engaged) return;
+    e.preventDefault();
+    if (touchY == null) return;
+    const dy = touchY - e.touches[0].clientY;
+    if (Math.abs(dy) >= TOUCH_THRESH) { touchY = e.touches[0].clientY; tryStep(Math.sign(dy)); }
+  }
+  function onKey(e) {
+    if (!engaged) return;
+    const m = { ArrowDown: 1, PageDown: 1, ' ': 1, ArrowUp: -1, PageUp: -1 };
+    if (e.key in m) { e.preventDefault(); tryStep(m[e.key]); }
+  }
+
+  // engagement — DOWN-ONLY. fires when the anchor's bottom edge reaches the viewport
+  // bottom (so the overlay pops without the next section showing behind it). scrolling
+  // up passes through without playing; re-arms on every downward pass.
+  function onScroll() {
+    const y = scrollY, dir = y >= lastY ? 1 : -1;
+    lastY = y;
+    if (engaged || performance.now() < releaseUntil) return;
+    if (dir < 0) return;                 // never play in reverse
+    const T = tear.offsetTop, H = tear.offsetHeight, vh = innerHeight;
+    const enterY = T + H - vh;           // scrollY where the anchor fills to the bottom
+    if (y >= enterY && y <= enterY + vh * 0.5) engage(0);
+  }
+
+  addEventListener('wheel', onWheel, { passive: false });
+  addEventListener('touchstart', onTouchStart, { passive: true });
+  addEventListener('touchmove', onTouchMove, { passive: false });
+  addEventListener('keydown', onKey);
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => {
+    sizeBG();
+    if (engaged) render(curP, performance.now() / 1000);
   });
+  sizeBG();
+  onScroll();          // engage immediately if the interlude already fills the view
+})();
 </script>
 </body>
 </html>
