@@ -108,9 +108,9 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
    Static by default (no JS / reduced motion); .js-tear enables the scroll-driven version.
    The world is signal-fluo: acts alternate full fluo fields (ink-black type)
    with carbon fields (glowing fluo type). A grain-dissolve canvas swaps the fields. */
-/* the payoff line — the letter picking back up right after the colour burst */
+/* the payoff line — a full-screen return beat the exit brakes on, then the letter continues */
 .tear-outro{
-  min-height:58vh;
+  min-height:100vh;
   display:flex;flex-direction:column;justify-content:center;
 }
 .tear-outro p{
@@ -765,7 +765,7 @@ uptime: 99.99%</pre>
   let step = 0, curP = ANCHORS[0], clock = 0;
   let engaged = false, busy = false, accum = 0;
   let raf = null, animFrom = 0, animTo = 0, animStart = 0;
-  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, lastY = scrollY;
+  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, brakeY = -1, lastY = scrollY;
 
   function loop(now) {
     raf = null;
@@ -823,20 +823,34 @@ uptime: 99.99%</pre>
     tear.classList.add('is-exiting');
     setTimeout(() => tear.classList.remove('is-exiting'), 760);
     const now = performance.now();
-    releaseUntil = now + 850;          // hysteresis: don't re-engage during the exit
-    absorbUntil = now + 620;           // eat leftover momentum through the reveal
+    releaseUntil = now + 1000;         // hysteresis: don't re-engage during the exit/brake
+    absorbUntil = now + 850;           // brake: hold the return screen while momentum dies
     const T = tear.offsetTop, H = tear.offsetHeight, vh = innerHeight;
-    // down → next section pinned to top; up → clearly back above the interlude
-    scrollTo(0, dir > 0 ? T + H : Math.max(0, T - vh * 0.55));
+    let landing;
+    if (dir > 0) {
+      // centre the payoff line — the exit lands ON the return screen and brakes there
+      const outro = tear.parentElement.querySelector('.tear-outro');
+      landing = outro ? Math.round(outro.offsetTop + (outro.offsetHeight - vh) / 2) : T + H;
+    } else {
+      landing = Math.max(0, T - vh * 0.55);   // up → clearly back above the interlude
+    }
+    scrollTo(0, landing);
+    brakeY = landing;
     lastY = scrollY;
     if (raf != null) { cancelAnimationFrame(raf); raf = null; }
   }
 
-  // input — one gesture = one step. absorb post-release momentum so the letter
-  // that's revealed on exit doesn't get scrolled away by leftover inertia.
+  // input — one gesture = one step. after release, brake: hold the return screen and keep
+  // absorbing until the flick's momentum actually dies, so the exit doesn't fly past it.
   function onWheel(e) {
     const now = performance.now();
-    if (now < absorbUntil) { e.preventDefault(); return; }
+    if (now < absorbUntil) {
+      e.preventDefault();
+      if (brakeY >= 0) scrollTo(0, brakeY);                  // hold the return screen put
+      if (Math.abs(e.deltaY) > 3) absorbUntil = now + 180;   // extend the brake while momentum is alive
+      return;
+    }
+    if (brakeY >= 0) brakeY = -1;
     if (!engaged) return;
     e.preventDefault();
     if (busy || now < cooldownUntil) {
@@ -868,6 +882,12 @@ uptime: 99.99%</pre>
   function onScroll() {
     const y = scrollY, dir = y >= lastY ? 1 : -1;
     lastY = y;
+    if (brakeY >= 0 && performance.now() < absorbUntil) {   // brake: keep the return screen put
+      if (Math.abs(y - brakeY) > 1) scrollTo(0, brakeY);
+      lastY = brakeY;
+      return;
+    }
+    if (brakeY >= 0) brakeY = -1;
     if (engaged || performance.now() < releaseUntil) return;
     if (dir < 0) return;                 // never play in reverse
     const T = tear.offsetTop, H = tear.offsetHeight, vh = innerHeight;
