@@ -756,6 +756,7 @@ uptime: 99.99%</pre>
   const LAST = ANCHORS.length - 1;
   const DUR = 780;                 // ms per jump
   const WHEEL_THRESH = 26, TOUCH_THRESH = 42;
+  const DAMP_MS = 1000;            // after exit, ease scroll speed back to normal over this window
 
   // build step dots
   ANCHORS.forEach(() => el.dots.appendChild(document.createElement('i')));
@@ -765,7 +766,7 @@ uptime: 99.99%</pre>
   let step = 0, curP = ANCHORS[0], clock = 0;
   let engaged = false, busy = false, accum = 0;
   let raf = null, animFrom = 0, animTo = 0, animStart = 0;
-  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, brakeY = -1, lastY = scrollY;
+  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, brakeY = -1, dampUntil = 0, lastY = scrollY;
 
   function loop(now) {
     raf = null;
@@ -804,7 +805,7 @@ uptime: 99.99%</pre>
   function engage(entry) {
     if (engaged) return;
     tear.classList.remove('is-exiting');
-    engaged = true; step = entry; accum = 0;
+    engaged = true; step = entry; accum = 0; brakeY = -1;
     sizeBG();
     curP = ANCHORS[entry];
     render(curP, performance.now() / 1000);           // draw the act before the fade-in
@@ -850,8 +851,15 @@ uptime: 99.99%</pre>
       if (Math.abs(e.deltaY) > 3) absorbUntil = now + 180;   // extend the brake while momentum is alive
       return;
     }
-    if (brakeY >= 0) brakeY = -1;
-    if (!engaged) return;
+    if (brakeY >= 0) { brakeY = -1; dampUntil = now + DAMP_MS; }
+    if (!engaged) {
+      if (now < dampUntil) {                                 // ease scroll speed back to normal, so a
+        e.preventDefault();                                  // hard "interlude flick" doesn't blow past the
+        const t = 1 - (dampUntil - now) / DAMP_MS;           // next section — the user re-adapts to the flow
+        scrollBy(0, e.deltaY * (0.35 + 0.65 * t));
+      }
+      return;
+    }
     e.preventDefault();
     if (busy || now < cooldownUntil) {
       accum = 0;
@@ -887,7 +895,7 @@ uptime: 99.99%</pre>
       lastY = brakeY;
       return;
     }
-    if (brakeY >= 0) brakeY = -1;
+    if (brakeY >= 0) { brakeY = -1; dampUntil = performance.now() + DAMP_MS; }
     if (engaged || performance.now() < releaseUntil) return;
     if (dir < 0) return;                 // never play in reverse
     const T = tear.offsetTop, H = tear.offsetHeight, vh = innerHeight;
