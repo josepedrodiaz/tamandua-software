@@ -145,15 +145,14 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
 
 /* scroll-trigger anchor (blank paper when idle, so we keep it short to minimise the
    gap you pass on the way up); the stage itself is a full-viewport fixed overlay.
-   entry rises + fades in; exit lifts + fades out — no hard cut. */
+   ENTRY is instant + opaque (the act is drawn before it shows, so nothing behind it
+   bleeds through); only the EXIT fades — it lifts + fades out over the letter. */
 .js-tear .tear{height:56vh}
 .js-tear .tear-stage{
   position:fixed;inset:0;overflow:hidden;z-index:50;
   opacity:0;visibility:hidden;
-  transform:translateY(3vh);
-  transition:opacity 0.5s ease, transform 0.55s cubic-bezier(.22,.61,.36,1), visibility 0.5s;
 }
-.js-tear .tear.is-on .tear-stage{opacity:1;visibility:visible;transform:none}
+.js-tear .tear.is-on .tear-stage{opacity:1;visibility:visible}
 .js-tear .tear.is-exiting .tear-stage{
   opacity:0;visibility:visible;
   transform:translateY(-5vh);
@@ -750,7 +749,6 @@ uptime: 99.99%</pre>
   // screen; scroll position does NOT scrub the animation. While a jump plays,
   // input is locked. At the ends, scrolling releases back to the letter.
   const ANCHORS = [0.27, 0.42, 0.565, 0.71, 0.835, 0.99]; // p per screen (intro lives in the letter)
-  const ENTRY_P = 0.08;   // paper, just before the first wipe — entry animates from here
   const LAST = ANCHORS.length - 1;
   const DUR = 780;                 // ms per jump
   const WHEEL_THRESH = 26, TOUCH_THRESH = 42;
@@ -797,23 +795,16 @@ uptime: 99.99%</pre>
   }
 
   // the stage is a fixed overlay, so its screen position doesn't depend on scrollY.
-  // entering from the top plays the paper→act colour wipe as it rises + fades in.
+  // entry goes STRAIGHT to the act colour and cross-fades in — no paper/white pre-roll
+  // (which used to flash a blank frame before the colour kicked in).
   function engage(entry) {
     if (engaged) return;
     tear.classList.remove('is-exiting');
     engaged = true; step = entry; accum = 0;
     sizeBG();
-    // draw the opening frame BEFORE revealing the overlay, so no stale frame
-    // (last cycle's outro, or the just-cleared canvas) flashes during the fade-in.
-    if (entry === 0) {
-      curP = ENTRY_P;                                 // paper — matches the letter, invisible
-      render(curP, performance.now() / 1000);
-      animFrom = ENTRY_P; animTo = ANCHORS[0];
-      animStart = performance.now(); busy = true;     // then the paper→act wipe plays
-    } else {
-      curP = ANCHORS[entry];
-      render(curP, performance.now() / 1000);
-    }
+    // draw the act BEFORE revealing the overlay, so the fade-in reveals colour directly
+    curP = ANCHORS[entry];
+    render(curP, performance.now() / 1000);
     tear.classList.add('is-on');
     paintDots();
     ensureLoop();
