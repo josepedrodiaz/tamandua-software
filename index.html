@@ -108,7 +108,17 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
    Static by default (no JS / reduced motion); .js-tear enables the scroll-driven version.
    The world is signal-fluo: acts alternate full fluo fields (ink-black type)
    with carbon fields (glowing fluo type). A grain-dissolve canvas swaps the fields. */
-.t-outro{margin-top:44px;font-size:21px;line-height:1.45}
+/* the payoff line — the letter picking back up right after the colour burst */
+.tear-outro{
+  min-height:58vh;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.tear-outro p{
+  margin:0;
+  font-size:clamp(22px,3vw,29px);line-height:1.32;
+  color:var(--ink-soft);
+}
+.tear-outro em{color:var(--ink);font-style:italic}
 
 .t-dark{
   background:#17171A;color:#F5EFE0;
@@ -194,12 +204,6 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
 .t-dots{display:none}
 .js-tear .t-dots{display:flex}
 .js-tear .t-bg{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.js-tear .t-outro{
-  position:absolute;left:50%;top:50%;margin:0;opacity:0;z-index:6;
-  transform:translate(-50%,-50%);
-  width:min(620px,calc(100vw - 48px));
-  will-change:transform,opacity;
-}
 .js-tear .t-dark{position:absolute;inset:0;margin:0;padding:0;overflow:hidden;background:transparent}
 .js-tear .t-inner{position:static;max-width:none;display:block}
 .js-tear .t-slide{
@@ -252,7 +256,6 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
   display:block;position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;
   background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.5) 100%);
 }
-.js-tear .t-outro{text-align:center;font-size:clamp(20px,3vw,28px)}
 @media (max-width:560px){
   .js-tear .t-stream{display:none}
 }
@@ -470,12 +473,14 @@ uptime: 99.99%</pre>
 
         <canvas class="t-net" aria-hidden="true"></canvas>
 
-        <p class="t-outro"><em>…and then we make it look this simple again.</em><br>That's the whole point.</p>
-
         <div class="t-dots" aria-hidden="true"></div>
         <div class="t-hint" aria-hidden="true"><span>scroll ↓</span></div>
 
       </div>
+  </section>
+
+  <section class="tear-outro">
+    <p><em>…and then we make it look this simple again.</em> That's the whole point.</p>
   </section>
 
   <h2 id="process">How we work</h2>
@@ -566,7 +571,6 @@ uptime: 99.99%</pre>
   const stage = tear.querySelector('.tear-stage');
   const q = s => tear.querySelector(s);
   const el = {
-    outro: q('.t-outro'),
     grid: q('.t-grid'), sL: q('.t-stream-l'), sR: q('.t-stream-r'),
     counter: q('.t-counter'), vig: q('.t-vignette'),
     bg: q('.t-bg'), net: q('.t-net'),
@@ -741,10 +745,6 @@ uptime: 99.99%</pre>
     const ci = ease(seg(p, 0.33, 0.375)) * (1 - ease(seg(p, 0.465, 0.51)));
     el.counter.style.opacity = ci;
     if (ci > 0) el.counter.textContent = Math.round(ROWS * easeOut(seg(p, 0.335, 0.475))).toLocaleString('en-US');
-
-    const oi = ease(seg(p, 0.955, 0.99));
-    el.outro.style.opacity = oi;
-    el.outro.style.transform = `translate(-50%,-50%) translate3d(0,${(1 - oi) * 26}px,0)`;
   }
 
   // ── threshold-stepped interlude ──
@@ -752,7 +752,7 @@ uptime: 99.99%</pre>
   // past a threshold triggers a self-contained animated jump to the next/prev
   // screen; scroll position does NOT scrub the animation. While a jump plays,
   // input is locked. At the ends, scrolling releases back to the letter.
-  const ANCHORS = [0.27, 0.42, 0.565, 0.71, 0.835, 0.99]; // p per screen (intro lives in the letter)
+  const ANCHORS = [0.27, 0.42, 0.565, 0.71, 0.835]; // p per colour screen (intro + outro live in the letter)
   const LAST = ANCHORS.length - 1;
   const DUR = 780;                 // ms per jump
   const WHEEL_THRESH = 26, TOUCH_THRESH = 42;
