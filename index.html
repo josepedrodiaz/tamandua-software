@@ -801,16 +801,19 @@ uptime: 99.99%</pre>
     tear.classList.remove('is-exiting');
     engaged = true; step = entry; accum = 0;
     sizeBG();
-    tear.classList.add('is-on');
-    paintDots();
-    if (entry === 0) {                 // arriving from the letter → animate the wipe
-      curP = ENTRY_P;
+    // draw the opening frame BEFORE revealing the overlay, so no stale frame
+    // (last cycle's outro, or the just-cleared canvas) flashes during the fade-in.
+    if (entry === 0) {
+      curP = ENTRY_P;                                 // paper — matches the letter, invisible
+      render(curP, performance.now() / 1000);
       animFrom = ENTRY_P; animTo = ANCHORS[0];
-      animStart = performance.now(); busy = true;
+      animStart = performance.now(); busy = true;     // then the paper→act wipe plays
     } else {
       curP = ANCHORS[entry];
       render(curP, performance.now() / 1000);
     }
+    tear.classList.add('is-on');
+    paintDots();
     ensureLoop();
   }
   function release(dir) {
