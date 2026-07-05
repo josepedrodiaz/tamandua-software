@@ -145,19 +145,23 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
 
 /* scroll-trigger anchor (blank paper when idle, so we keep it short to minimise the
    gap you pass on the way up); the stage itself is a full-viewport fixed overlay.
-   ENTRY is instant + opaque (the act is drawn before it shows, so nothing behind it
-   bleeds through); only the EXIT fades — it lifts + fades out over the letter. */
+   entry fades in; exit lifts + fades out. during the entry fade the later sections
+   are hidden (.tear-pre) so none of the post-interlude content bleeds through. */
 .js-tear .tear{height:56vh}
 .js-tear .tear-stage{
   position:fixed;inset:0;overflow:hidden;z-index:50;
   opacity:0;visibility:hidden;
+  transform:translateY(3vh);
+  transition:opacity 0.5s ease, transform 0.55s cubic-bezier(.22,.61,.36,1), visibility 0.5s;
 }
-.js-tear .tear.is-on .tear-stage{opacity:1;visibility:visible}
+.js-tear .tear.is-on .tear-stage{opacity:1;visibility:visible;transform:none}
 .js-tear .tear.is-exiting .tear-stage{
   opacity:0;visibility:visible;
   transform:translateY(-5vh);
   transition:opacity 0.62s ease, transform 0.7s cubic-bezier(.22,.61,.36,1);
 }
+/* everything after the interlude, hidden while the entry fade is in progress */
+.js-tear.tear-pre .letter .tear ~ *{visibility:hidden}
 /* step dots — discrete-screen indicator */
 .js-tear .t-dots{
   display:flex;position:absolute;right:26px;top:50%;z-index:8;
@@ -761,7 +765,7 @@ uptime: 99.99%</pre>
   let step = 0, curP = ANCHORS[0], clock = 0;
   let engaged = false, busy = false, accum = 0;
   let raf = null, animFrom = 0, animTo = 0, animStart = 0;
-  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, lastY = scrollY;
+  let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, lastY = scrollY;
 
   function loop(now) {
     raf = null;
@@ -794,20 +798,22 @@ uptime: 99.99%</pre>
     jump(next);
   }
 
-  // the stage is a fixed overlay, so its screen position doesn't depend on scrollY.
-  // entry goes STRAIGHT to the act colour and cross-fades in — no paper/white pre-roll
-  // (which used to flash a blank frame before the colour kicked in).
+  // fixed overlay that fades in over the letter. so the fade never reveals content that
+  // belongs AFTER the interlude, we hide those sections (.tear-pre) for the length of the
+  // fade, then bring them back once the stage is fully opaque (safely behind it).
   function engage(entry) {
     if (engaged) return;
     tear.classList.remove('is-exiting');
     engaged = true; step = entry; accum = 0;
     sizeBG();
-    // draw the act BEFORE revealing the overlay, so the fade-in reveals colour directly
     curP = ANCHORS[entry];
-    render(curP, performance.now() / 1000);
+    render(curP, performance.now() / 1000);           // draw the act before the fade-in
+    document.documentElement.classList.add('tear-pre'); // hide the post-interlude sections
     tear.classList.add('is-on');
     paintDots();
     ensureLoop();
+    clearTimeout(revealT);
+    revealT = setTimeout(() => document.documentElement.classList.remove('tear-pre'), 620);
   }
   function release(dir) {
     if (!engaged) return;
