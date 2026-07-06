@@ -650,23 +650,35 @@ uptime: 99.99%</pre>
   // ── continuous constellation network ──
   // one 9-node layout per act; nodes travel between layouts, edges follow.
   const nctx = el.net.getContext('2d');
-  const NODES = 9;
+  const NODES = 11;
   function rng(seed) { return () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff; }
   function layout(seed) {
     const r = rng(seed), pts = [];
-    for (let i = 0; i < NODES; i++) pts.push([0.12 + r() * 0.76, 0.14 + r() * 0.72]);
-    // edges: connect each node to its ~2 nearest for an organic mesh
+    for (let i = 0; i < NODES; i++) pts.push([0.1 + r() * 0.8, 0.13 + r() * 0.74]);
+    const dist = (a, b) => (pts[a][0] - pts[b][0]) ** 2 + (pts[a][1] - pts[b][1]) ** 2;
     const edges = [];
+    const has = (a, b) => edges.some(e => (e[0] === a && e[1] === b) || (e[0] === b && e[1] === a));
+    // minimum spanning tree (Prim) → ONE connected network, never two separate clusters
+    const inTree = [0], rest = [];
+    for (let i = 1; i < NODES; i++) rest.push(i);
+    while (rest.length) {
+      let bd = Infinity, from = 0, idx = 0;
+      for (const a of inTree) rest.forEach((b, ri) => { const d = dist(a, b); if (d < bd) { bd = d; from = a; idx = ri; } });
+      edges.push([from, rest[idx]]); inTree.push(rest[idx]); rest.splice(idx, 1);
+    }
+    // one extra nearest edge per node → a denser, more played-with mesh (still one network)
     for (let i = 0; i < NODES; i++) {
-      const d = pts.map((p, j) => [j, (p[0] - pts[i][0]) ** 2 + (p[1] - pts[i][1]) ** 2])
-        .filter(x => x[0] !== i).sort((a, b) => a[1] - b[1]);
-      for (let k = 0; k < 2; k++) { const j = d[k][0]; if (!edges.some(e => (e[0] === j && e[1] === i))) edges.push([i, j]); }
+      const near = pts.map((p, j) => [j, dist(i, j)]).filter(x => x[0] !== i).sort((a, b) => a[1] - b[1]);
+      for (let k = 0; k < near.length; k++) { const j = near[k][0]; if (!has(i, j)) { edges.push([i, j]); break; } }
     }
     return { pts, edges };
   }
   const LAYOUTS = [11, 27, 43, 61, 83].map(layout);
   // node phase drift so the mesh breathes even when parked on one act
   const PH = Array.from({ length: NODES }, (_, i) => [i * 1.7, i * 2.3]);
+  // per-node depth → variable line weight + brightness, so the mesh isn't a flat grid
+  const dR = rng(53);
+  const DEPTH = Array.from({ length: NODES }, () => 0.3 + 0.7 * dR());
 
   // which two layouts are we between, and how far — mapped across the whole track
   const NET_STOPS = [0.22, 0.40, 0.57, 0.72, 0.83]; // center of each act
@@ -695,22 +707,36 @@ uptime: 99.99%</pre>
       const dyb = Math.cos(breathe * 0.6 + PH[i][1]) * 0.012;
       P.push([(mix(ax, bx, t) + dxb) * VW, (mix(ay, by, t) + dyb) * VH]);
     }
-    // edges from both layouts, cross-faded — this is the "threads between slides"
-    nctx.lineWidth = 1.1;
+    // ── edges: neon self-glow on the carbon acts (dialled back a touch); on the bright
+    //    acts a luminous white halo lifts the ink lines and raises their presence ──
+    const glow = onDark ? line : '255,255,255';
+    nctx.shadowColor = `rgba(${glow},${(onDark ? 0.62 : 0.55) * vis})`;
+    nctx.shadowBlur = onDark ? 11 : 7;
     function edgeSet(L, alpha) {
       if (alpha <= 0.01) return;
-      nctx.strokeStyle = `rgba(${line},${(onDark ? 0.5 : 0.62) * alpha * vis})`;
-      nctx.beginPath();
-      for (const [i, j] of L.edges) { nctx.moveTo(P[i][0], P[i][1]); nctx.lineTo(P[j][0], P[j][1]); }
-      nctx.stroke();
+      for (const [i, j] of L.edges) {
+        const depth = (DEPTH[i] + DEPTH[j]) * 0.5;         // 0.3 .. 1
+        nctx.lineWidth = onDark ? 1 + depth * 2.9 : 0.7 + depth * 1.4;
+        nctx.strokeStyle = `rgba(${line},${(onDark ? 0.46 : 0.8) * (0.4 + 0.6 * depth) * alpha * vis})`;
+        nctx.beginPath();
+        nctx.moveTo(P[i][0], P[i][1]); nctx.lineTo(P[j][0], P[j][1]);
+        nctx.stroke();
+      }
     }
     edgeSet(La, 1 - t);
     edgeSet(Lb, t);
-    // nodes
-    nctx.fillStyle = `rgba(${line},${(onDark ? 0.9 : 0.95) * vis})`;
+
+    // ── nodes: a glowing disc + a hot bright core (futuristic energy points) ──
+    nctx.shadowBlur = onDark ? 14 : 9;
+    nctx.fillStyle = `rgba(${line},${(onDark ? 0.95 : 0.99) * vis})`;
+    const rad = i => (onDark ? (i === 4 ? 3.6 : 2.2) + DEPTH[i] * 1.9 : (i === 4 ? 2.6 : 1.6) + DEPTH[i] * 1.1);
     for (let i = 0; i < NODES; i++) {
-      const big = i === 4 ? 3.4 : 2.4;
-      nctx.beginPath(); nctx.arc(P[i][0], P[i][1], big, 0, 7); nctx.fill();
+      nctx.beginPath(); nctx.arc(P[i][0], P[i][1], rad(i), 0, 7); nctx.fill();
+    }
+    nctx.shadowBlur = 0;
+    nctx.fillStyle = `rgba(255,255,255,${(onDark ? 0.9 : 0.85) * vis})`;
+    for (let i = 0; i < NODES; i++) {
+      nctx.beginPath(); nctx.arc(P[i][0], P[i][1], rad(i) * 0.42, 0, 7); nctx.fill();
     }
   }
 
@@ -806,6 +832,9 @@ uptime: 99.99%</pre>
     if (engaged) return;
     tear.classList.remove('is-exiting');
     engaged = true; step = entry; accum = 0; brakeY = -1;
+    // hold the first card: absorb the entry gesture's momentum (extends itself in onWheel
+    // while the wheel is still coasting) so it doesn't skip straight past card 1.
+    cooldownUntil = performance.now() + 550;
     sizeBG();
     curP = ANCHORS[entry];
     render(curP, performance.now() / 1000);           // draw the act before the fade-in
