@@ -541,9 +541,8 @@ uptime: 99.99%</pre>
 
   <div class="signature">
     <p>
-      <span class="who">Pedro Díaz</span><br>
-      <span class="role">Tamandua Software, Buenos Aires</span><br>
-      <span class="role"><a href="mailto:josepedrodiaz@gmail.com">josepedrodiaz@gmail.com</a></span>
+      <span class="who">Tamandua Software</span><br>
+      <span class="role">Buenos Aires · <span class="sig-year"></span></span>
     </p>
   </div>
 
@@ -552,7 +551,7 @@ uptime: 99.99%</pre>
 </main>
 
 <footer>
-  <span>© 2026 Tamandua Software</span>
+  <span>© <span class="sig-year"></span> Tamandua Software</span>
   <span><a href="https://josepedrodiaz.com" target="_blank" rel="noopener">Pedro's portfolio</a></span>
 </footer>
 
@@ -561,6 +560,8 @@ uptime: 99.99%</pre>
 (() => {
   const dl = document.querySelector('.dateline');
   if (dl) dl.textContent = 'Buenos Aires, ' + new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const yr = new Date().getFullYear();
+  document.querySelectorAll('.sig-year').forEach(el => el.textContent = yr);   // signature + footer year, never stale
 })();
 
 (() => {
@@ -650,92 +651,188 @@ uptime: 99.99%</pre>
   // ── continuous constellation network ──
   // one 9-node layout per act; nodes travel between layouts, edges follow.
   const nctx = el.net.getContext('2d');
-  const NODES = 11;
+  const NODES = 240;  // shared node budget; the shelves use all 240 (8 × 30 rows), other forms hide the extras
   function rng(seed) { return () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff; }
-  function layout(seed) {
-    const r = rng(seed), pts = [];
-    for (let i = 0; i < NODES; i++) pts.push([0.1 + r() * 0.8, 0.13 + r() * 0.74]);
-    const dist = (a, b) => (pts[a][0] - pts[b][0]) ** 2 + (pts[a][1] - pts[b][1]) ** 2;
-    const edges = [];
-    const has = (a, b) => edges.some(e => (e[0] === a && e[1] === b) || (e[0] === b && e[1] === a));
-    // minimum spanning tree (Prim) → ONE connected network, never two separate clusters
-    const inTree = [0], rest = [];
-    for (let i = 1; i < NODES; i++) rest.push(i);
-    while (rest.length) {
-      let bd = Infinity, from = 0, idx = 0;
-      for (const a of inTree) rest.forEach((b, ri) => { const d = dist(a, b); if (d < bd) { bd = d; from = a; idx = ri; } });
-      edges.push([from, rest[idx]]); inTree.push(rest[idx]); rest.splice(idx, 1);
-    }
-    // one extra nearest edge per node → a denser, more played-with mesh (still one network)
-    for (let i = 0; i < NODES; i++) {
-      const near = pts.map((p, j) => [j, dist(i, j)]).filter(x => x[0] !== i).sort((a, b) => a[1] - b[1]);
-      for (let k = 0; k < near.length; k++) { const j = near[k][0]; if (!has(i, j)) { edges.push([i, j]); break; } }
-    }
+
+  // ── the five geometric forms, one per card. points scramble between them (the disorder)
+  //    and settle into each exact shape. all traced/computed as precise wireframes. ──
+  function tesseract() {                                   // 1 · unreasonable — a hypercube: a cube within a cube
+    const oc = [[0.16,0.40],[0.68,0.40],[0.68,0.92],[0.16,0.92],[0.34,0.20],[0.86,0.20],[0.86,0.72],[0.34,0.72]];
+    const cx = 0.51, cy = 0.56, k = 0.40;                  // k → the padding between the outer and inner cube
+    const pts = oc.concat(oc.map(([x,y]) => [cx+(x-cx)*k, cy+(y-cy)*k]));   // 0-7 outer cube, 8-15 inner cube
+    const cE = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]], edges = [];
+    cE.forEach(([a,b]) => { edges.push([a,b]); edges.push([a+8,b+8]); });   // both cubes
+    for (let i = 0; i < 8; i++) edges.push([i, i+8]);                       // connectors
     return { pts, edges };
   }
-  const LAYOUTS = [11, 27, 43, 61, 83].map(layout);
-  // node phase drift so the mesh breathes even when parked on one act
-  const PH = Array.from({ length: NODES }, (_, i) => [i * 1.7, i * 2.3]);
-  // per-node depth → variable line weight + brightness, so the mesh isn't a flat grid
-  const dR = rng(53);
-  const DEPTH = Array.from({ length: NODES }, () => 0.3 + 0.7 * dR());
-
-  // which two layouts are we between, and how far — mapped across the whole track
-  const NET_STOPS = [0.22, 0.40, 0.57, 0.72, 0.83]; // center of each act
-  function netAt(p) {
-    if (p <= NET_STOPS[0]) return { a: 0, b: 0, t: 0 };
-    if (p >= NET_STOPS[NET_STOPS.length - 1]) return { a: 4, b: 4, t: 0 };
-    for (let i = 0; i < NET_STOPS.length - 1; i++) {
-      if (p <= NET_STOPS[i + 1]) return { a: i, b: i + 1, t: ease(seg(p, NET_STOPS[i], NET_STOPS[i + 1])) };
-    }
-    return { a: 4, b: 4, t: 0 };
+  function shelves() {                                     // 2 · migration — 40M rows racked into ordered shelves
+    const COLS = 8, ROWS = 30, pts = [], edges = [];       // 8 × 30 = 240 = every node, no fillers
+    for (let s = 0; s < ROWS; s++) for (let c = 0; c < COLS; c++)
+      pts.push([0.12 + c * (0.76 / (COLS - 1)), 0.94 - s * (0.88 / (ROWS - 1))]);   // s=0 bottom row, s=29 top
+    for (let s = 0; s < ROWS; s++) for (let c = 0; c < COLS - 1; c++) edges.push([s*COLS + c, s*COLS + c + 1]);   // row rails
+    for (let s = 0; s < ROWS - 1; s++) { edges.push([s*COLS, (s+1)*COLS]); edges.push([s*COLS + COLS-1, (s+1)*COLS + COLS-1]); }   // end uprights (the cabinet frame)
+    return { pts, edges };
   }
+  function hub() {                                         // 3 · architecture — one core, six brands
+    const pts = [[0.5,0.5]], edges = [], ring = r => { for (let i = 0; i < 6; i++) { const a = Math.PI/2+i*Math.PI/3; pts.push([0.5+r*Math.cos(a), 0.5-r*Math.sin(a)]); } };
+    ring(0.19); ring(0.38); pts.push([0.5,0.06]);
+    for (let i = 1; i <= 6; i++) { edges.push([0,i]); edges.push([i, i===6?1:i+1]); edges.push([i, i+6]); }
+    edges.push([0,13]);
+    return { pts, edges };
+  }
+  function dome() {                                        // 4 · scale — a triangulated geodesic dome
+    const pts = [[0.5,0.09]], edges = [], ring = (r,y,ry) => { for (let i = 0; i < 6; i++) { const a = Math.PI/6+i*Math.PI/3; pts.push([0.5+r*Math.cos(a), y-ry*Math.sin(a)]); } };
+    ring(0.17,0.42,0.07); ring(0.35,0.66,0.13); pts.push([0.5,0.62]);
+    for (let i = 1; i <= 6; i++) { edges.push([0,i]); edges.push([i, i===6?1:i+1]); edges.push([i, i+6]); edges.push([i, (i===6?1:i+1)+6]); }
+    for (let i = 7; i <= 12; i++) edges.push([i, i===12?7:i+1]);
+    return { pts, edges };
+  }
+  function rescue() {                                      // 5 · rescue — a split solid, stitched whole
+    const cx = 0.5, R = 0.30, ry = 0.10, gap = 0.09, pts = [[0.5,0.10],[0.5,0.90]], edges = [];
+    for (let i = 0; i < 6; i++) { const a = Math.PI/2+i*Math.PI/3; pts.push([cx+R*Math.cos(a), (0.5-gap)-ry*Math.sin(a)]); }
+    for (let i = 0; i < 6; i++) { const a = Math.PI/2+i*Math.PI/3+Math.PI/6; pts.push([cx+R*Math.cos(a), (0.5+gap)-ry*Math.sin(a)]); }
+    pts.push([cx-0.045,0.5],[cx+0.045,0.5]);
+    for (let i = 2; i <= 7; i++) { edges.push([0,i]); edges.push([i, i===7?2:i+1]); }
+    for (let i = 8; i <= 13; i++) { edges.push([1,i]); edges.push([i, i===13?8:i+1]); }
+    for (let i = 2; i <= 7; i++) edges.push([i, i+6]);
+    edges.push([14,15],[14,2],[15,5],[14,8],[15,11]);
+    return { pts, edges };
+  }
+  // pad each form to NODES points (extras ride edge midpoints), then centre + uniform-scale
+  // so every form sits the same size and keeps its aspect (no widescreen stretch)
+  function prep(fig) {
+    const pts = fig.pts.map(p => p.slice());
+    for (let k = 0; pts.length < NODES; k++) { const [a,b] = fig.edges[k % fig.edges.length]; pts.push([(fig.pts[a][0]+fig.pts[b][0])/2, (fig.pts[a][1]+fig.pts[b][1])/2]); }
+    let mnx=1e9,mny=1e9,mxx=-1e9,mxy=-1e9;
+    for (const [x,y] of pts) { mnx=Math.min(mnx,x); mny=Math.min(mny,y); mxx=Math.max(mxx,x); mxy=Math.max(mxy,y); }
+    const w=mxx-mnx, h=mxy-mny, sc=0.86/Math.max(w,h), ox=0.5-(mnx+w/2)*sc, oy=0.5-(mny+h/2)*sc;
+    return { pts: pts.map(([x,y]) => [x*sc+ox, y*sc+oy]), edges: fig.edges };
+  }
+  const figs = [tesseract(), shelves(), hub(), dome(), rescue()];
+  const LAYOUTS = figs.map(prep);
+  // card 1 tesseract: centroid of the outer cube (0-7) and the inner cube (8-15),
+  // so each cube can float as a rigid body — rotate + drift about its own centre, never deform
+  const cenOf = (L, s, e) => { let x = 0, y = 0; for (let i = s; i < e; i++) { x += L.pts[i][0]; y += L.pts[i][1]; } return [x/(e-s), y/(e-s)]; };
+  const C_OUT = cenOf(LAYOUTS[0], 0, 8), C_IN = cenOf(LAYOUTS[0], 8, 16);
+  const CEN = LAYOUTS.map(L => cenOf(L, 0, NODES));      // per-figure centroid → single rigid body (cards 2-5)
+  // which nodes actually touch an edge; the rest (fillers, orphans) never draw as loose dots
+  const CONN = LAYOUTS.map(L => { const c = new Array(NODES).fill(0); for (const [a,b] of L.edges) { c[a] = 1; c[b] = 1; } return c; });
+  // per-node depth → variable line weight + brightness so the mesh isn't a flat grid (a figure may
+  // bake its own depth array via f.depth to read as 3-D; otherwise it's a seeded random weight)
+  const dR = rng(53);
+  const DEPTHS = figs.map(f => Array.from({ length: NODES }, (_, i) => (f.depth && i < f.depth.length) ? f.depth[i] : 0.3 + 0.7 * dR()));
+  // a messy pile heaped at the bottom — some cards collapse the previous form into this and then
+  // rack the next one up out of it, ordered, bottom shelf first (the "chaos → order" move)
+  const pR = rng(23);
+  const PILE = Array.from({ length: NODES }, () => { const a = pR() * 6.283, rad = Math.sqrt(pR()) * 0.26; return [0.5 + Math.cos(a) * rad, 0.9 + Math.sin(a) * rad * 0.4 - 0.02]; });
+  const ASSEMBLE = [true, true, false, false, false];    // which cards arrive by pile → order (cards 1 & 2)
+  const YRANGE = LAYOUTS.map(L => { let mn = 1e9, mx = -1e9; for (const [,y] of L.pts) { mn = Math.min(mn, y); mx = Math.max(mx, y); } return [mn, mx]; });
+
   function drawNet(p, s, breathe) {
     nctx.clearRect(0, 0, VW, VH);
     const vis = ease(seg(p, 0.14, 0.24)) * (1 - ease(seg(p, 0.90, 0.955)));
     if (vis <= 0.001) return;
-    const n = netAt(p);
-    const La = LAYOUTS[n.a], Lb = LAYOUTS[n.b], t = n.t;
+    // the figure runs on its OWN clock — `asmStart` is set on arrival, never scrubbed by scroll.
+    // `card` is where we are, `from` where we came from; asm 0→1 plays the arrival over DUR_ASM.
+    const card = step, from = prevCard, To = LAYOUTS[card], From = from >= 0 ? LAYOUTS[from] : null;
+    const rawAsm = clamp01((performance.now() - asmStart) / DUR_ASM);
+    const asm = ease(rawAsm);              // smooth master (morph cards); the pile-assembly accelerates its rise instead
     // ink color follows the field polarity (dark type on fluo, fluo on carbon)
     const key = s.next && s.t >= 0.5 ? s.next : s.base;
     const onDark = DARK[key];
     const line = onDark ? '245,239,224' : '17,16,8';
-    const P = [];
+    // centre each form and scale by the smaller viewport dim → aspect kept, no stretch
+    const S = Math.min(VW, VH) * 0.82, OX = VW / 2, OY = VH / 2;
+    // every figure floats as a RIGID body — it rotates + drifts as a whole, so it stays solid
+    // and structured, never coming apart. the hypercube is two rigid cubes (inner drifts more,
+    // opposite sense); cards 2-5 are one body turning gently about their own centre.
+    const rot = 0.045 * Math.sin(breathe * 0.19), dWx = 0.012 * Math.sin(breathe * 0.15), dWy = 0.012 * Math.cos(breathe * 0.12);
+    const rTo = 0.05 * Math.sin(breathe * 0.20), dTox = 0.010 * Math.sin(breathe * 0.16), dToy = 0.010 * Math.cos(breathe * 0.13);
+    const rTi = -0.075 * Math.sin(breathe * 0.28 + 1.3), dTix = 0.024 * Math.sin(breathe * 0.24 + 2.1), dTiy = 0.024 * Math.cos(breathe * 0.19 + 1.1);
+    const rigid = (fig, i, x, y) => {   // → offset that turns a settled node into its rigid-floated one
+      let cx, cy, th, dx, dy;
+      if (fig === 0) { const inr = i >= 8; cx = inr?C_IN[0]:C_OUT[0]; cy = inr?C_IN[1]:C_OUT[1]; th = inr?rTi:rTo; dx = inr?dTix:dTox; dy = inr?dTiy:dToy; }
+      else { cx = CEN[fig][0]; cy = CEN[fig][1]; th = rot; dx = dWx; dy = dWy; }
+      const c = Math.cos(th), sn = Math.sin(th), ox0 = x - cx, oy0 = y - cy;
+      return [cx + ox0*c - oy0*sn + dx - x, cy + ox0*sn + oy0*c + dy - y];
+    };
+    // arriving at a pile-assembled card (1 & 2): sink the previous form into the heap, then rack the
+    // new one up out of it — bottom row first. settle[i] tracks how "landed" each node is (for rails).
+    const assembleCard = ASSEMBLE[card];
+    const COLLAPSE = 0.22;                       // first 22% of the arrival sinks the old form into the pile
+    const collapseAlpha = (assembleCard && From && rawAsm < COLLAPSE) ? (1 - ease(rawAsm / COLLAPSE)) : 0;
+    // the rise ACCELERATES: rtA curves up so the first rows crawl into place and the last ones snap
+    const rt0 = From ? (rawAsm - COLLAPSE) / (1 - COLLAPSE) : rawAsm, rtA = rt0 * rt0;   // ease-in: accelerates to the finish
+    const P = [], settle = new Array(NODES).fill(1);
     for (let i = 0; i < NODES; i++) {
-      const ax = La.pts[i][0], ay = La.pts[i][1], bx = Lb.pts[i][0], by = Lb.pts[i][1];
-      const dxb = Math.sin(breathe * 0.7 + PH[i][0]) * 0.012;
-      const dyb = Math.cos(breathe * 0.6 + PH[i][1]) * 0.012;
-      P.push([(mix(ax, bx, t) + dxb) * VW, (mix(ay, by, t) + dyb) * VH]);
+      const bx = To.pts[i][0], by = To.pts[i][1];
+      let px, py;
+      if (assembleCard) {
+        if (From && rawAsm < COLLAPSE) {        // old form sinks to the pile, its rails fading out
+          const ct = ease(rawAsm / COLLAPSE), ax = From.pts[i][0], ay = From.pts[i][1], oa = rigid(from, i, ax, ay);
+          const nx = mix(ax, PILE[i][0], ct), ny = mix(ay, PILE[i][1], ct);
+          px = OX + (nx - 0.5 + oa[0] * (1 - ct)) * S; py = OY + (ny - 0.5 + oa[1] * (1 - ct)) * S;
+          settle[i] = 0;
+        } else {                                // new form rises out of the pile, staggered bottom → top
+          const ny_b = (by - YRANGE[card][0]) / Math.max(1e-6, YRANGE[card][1] - YRANGE[card][0]);
+          const g = ease(clamp01((rtA - (1 - ny_b) * 0.55) / 0.45)), ob = rigid(card, i, bx, by);
+          const nx = mix(PILE[i][0], bx, g), ny = mix(PILE[i][1], by, g);
+          px = OX + (nx - 0.5 + ob[0] * g) * S; py = OY + (ny - 0.5 + ob[1] * g) * S;
+          settle[i] = g;
+        }
+      } else {                                  // plain, time-based morph from the previous form
+        const ax = From ? From.pts[i][0] : bx, ay = From ? From.pts[i][1] : by;
+        const nx = mix(ax, bx, asm), ny = mix(ay, by, asm);
+        const ob = rigid(card, i, bx, by), oa = From ? rigid(from, i, ax, ay) : ob;
+        const fx = oa[0]*(1-asm) + ob[0]*asm, fy = oa[1]*(1-asm) + ob[1]*asm;
+        px = OX + (nx - 0.5 + fx) * S; py = OY + (ny - 0.5 + fy) * S;
+      }
+      P.push([px, py]);
     }
-    // ── edges: neon self-glow on the carbon acts (dialled back a touch); on the bright
-    //    acts a luminous white halo lifts the ink lines and raises their presence ──
+    // ── edges: neon self-glow on the carbon acts; on the bright acts a white halo lifts the ink ──
     const glow = onDark ? line : '255,255,255';
     nctx.shadowColor = `rgba(${glow},${(onDark ? 0.62 : 0.55) * vis})`;
     nctx.shadowBlur = onDark ? 11 : 7;
-    function edgeSet(L, alpha) {
+    function edgeSet(L, alpha, dep, st) {
       if (alpha <= 0.01) return;
-      for (const [i, j] of L.edges) {
-        const depth = (DEPTH[i] + DEPTH[j]) * 0.5;         // 0.3 .. 1
+      const es = [...L.edges].sort((e1, e2) => (dep[e1[0]] + dep[e1[1]]) - (dep[e2[0]] + dep[e2[1]]));  // back to front
+      for (const [i, j] of es) {
+        const sf = st ? Math.min(st[i], st[j]) : 1;   // a rail only shows once both its nodes have landed
+        if (sf <= 0.01) continue;
+        const depth = (dep[i] + dep[j]) * 0.5;             // 0.16 .. 1 → line weight + brightness
         nctx.lineWidth = onDark ? 1 + depth * 2.9 : 0.7 + depth * 1.4;
-        nctx.strokeStyle = `rgba(${line},${(onDark ? 0.46 : 0.8) * (0.4 + 0.6 * depth) * alpha * vis})`;
+        nctx.strokeStyle = `rgba(${line},${(onDark ? 0.46 : 0.8) * (0.4 + 0.6 * depth) * alpha * sf * vis})`;
         nctx.beginPath();
         nctx.moveTo(P[i][0], P[i][1]); nctx.lineTo(P[j][0], P[j][1]);
         nctx.stroke();
       }
     }
-    edgeSet(La, 1 - t);
-    edgeSet(Lb, t);
+    if (assembleCard) {
+      if (collapseAlpha > 0.01 && From) edgeSet(From, collapseAlpha, DEPTHS[from], null);   // old rails fade as it melts
+      edgeSet(To, 1, DEPTHS[card], settle);                                                 // new rails appear as nodes land
+    } else {
+      if (From) edgeSet(From, 1 - asm, DEPTHS[from], null);
+      edgeSet(To, From ? asm : 1, DEPTHS[card], null);
+    }
 
-    // ── nodes: a glowing disc + a hot bright core (futuristic energy points) ──
+    // ── nodes: a glowing disc + a hot bright core. only nodes on a line show once settled;
+    //    during a pile assembly the whole heap is visible, then fillers fade out as it locks in ──
+    const nodeDepth = i => (!assembleCard && From) ? DEPTHS[from][i] * (1 - asm) + DEPTHS[card][i] * asm : DEPTHS[card][i];
+    const rad = i => (onDark ? 2.2 + nodeDepth(i) * 1.9 : 1.6 + nodeDepth(i) * 1.1);
+    const av = assembleCard
+      ? (i => (From && rawAsm < COLLAPSE) ? CONN[from][i] : CONN[card][i])   // old heap melts, new heap racks up
+      : (i => From ? CONN[from][i] * (1 - asm) + CONN[card][i] * asm : CONN[card][i]);
+    const order = [];   // draw back to front so the front strand sits over the back one
+    for (let i = 0; i < NODES; i++) if (av(i) > 0.01) order.push(i);
+    order.sort((a, b) => nodeDepth(a) - nodeDepth(b));
     nctx.shadowBlur = onDark ? 14 : 9;
-    nctx.fillStyle = `rgba(${line},${(onDark ? 0.95 : 0.99) * vis})`;
-    const rad = i => (onDark ? (i === 4 ? 3.6 : 2.2) + DEPTH[i] * 1.9 : (i === 4 ? 2.6 : 1.6) + DEPTH[i] * 1.1);
-    for (let i = 0; i < NODES; i++) {
+    for (const i of order) {
+      nctx.fillStyle = `rgba(${line},${(onDark ? 0.95 : 0.99) * vis * av(i)})`;
       nctx.beginPath(); nctx.arc(P[i][0], P[i][1], rad(i), 0, 7); nctx.fill();
     }
     nctx.shadowBlur = 0;
-    nctx.fillStyle = `rgba(255,255,255,${(onDark ? 0.9 : 0.85) * vis})`;
-    for (let i = 0; i < NODES; i++) {
+    for (const i of order) {
+      nctx.fillStyle = `rgba(255,255,255,${(onDark ? 0.9 : 0.85) * vis * av(i)})`;
       nctx.beginPath(); nctx.arc(P[i][0], P[i][1], rad(i) * 0.42, 0, 7); nctx.fill();
     }
   }
@@ -780,7 +877,8 @@ uptime: 99.99%</pre>
   // input is locked. At the ends, scrolling releases back to the letter.
   const ANCHORS = [0.27, 0.42, 0.565, 0.71, 0.835]; // p per colour screen (intro + outro live in the letter)
   const LAST = ANCHORS.length - 1;
-  const DUR = 780;                 // ms per jump
+  const DUR = 780;                 // ms per jump (scroll/background only)
+  const DUR_ASM = 2200;            // ms for a figure to assemble on arrival — runs on its OWN clock, never scrubbed by scroll
   const WHEEL_THRESH = 26, TOUCH_THRESH = 42;
   const DAMP_MS = 1000;            // after exit, ease scroll speed back to normal over this window
 
@@ -793,6 +891,7 @@ uptime: 99.99%</pre>
   let engaged = false, busy = false, accum = 0;
   let raf = null, animFrom = 0, animTo = 0, animStart = 0;
   let releaseUntil = 0, cooldownUntil = 0, absorbUntil = 0, revealT = 0, brakeY = -1, dampUntil = 0, lastY = scrollY;
+  let asmStart = -1e9, prevCard = -1;   // figure-assembly clock + the card we're arriving FROM
 
   function loop(now) {
     raf = null;
@@ -812,7 +911,8 @@ uptime: 99.99%</pre>
 
   function jump(to) {
     animFrom = curP; animTo = ANCHORS[to];
-    animStart = performance.now(); busy = true; step = to;
+    animStart = performance.now(); busy = true;
+    prevCard = step; asmStart = performance.now(); step = to;   // fire the arriving card's own assembly clock
     paintDots();
     el.hint.classList.add('gone');
     ensureLoop();
@@ -832,6 +932,7 @@ uptime: 99.99%</pre>
     if (engaged) return;
     tear.classList.remove('is-exiting');
     engaged = true; step = entry; accum = 0; brakeY = -1;
+    prevCard = -1; asmStart = performance.now();   // first card assembles from the pile on entry (no previous form)
     // hold the first card: absorb the entry gesture's momentum (extends itself in onWheel
     // while the wheel is still coasting) so it doesn't skip straight past card 1.
     cooldownUntil = performance.now() + 550;

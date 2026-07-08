@@ -62,9 +62,8 @@ Tell us what you're trying to build. A line or twenty, both work. We reply withi
 
 Contact form fields: name, email, company (optional), message.
 
-Pedro Díaz
-Tamandua Software, Buenos Aires
-josepedrodiaz@gmail.com
+Tamandua Software
+Buenos Aires
 
 P.S. This site is a single HTML file, no framework, barely any JavaScript. View source — it's roughly how we build everything: as simple as the job lets us get away with.
 
