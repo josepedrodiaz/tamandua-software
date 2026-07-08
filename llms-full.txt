@@ -36,29 +36,25 @@ We also do the unreasonable jobs. Ultra-migrations: forty million rows moved liv
 
 ### How we work
 
-We listen before we quote. The first call is about your business and what's actually getting in the way. Then you get a proposal in plain language: what we'll build, how long it takes, what it costs. If a smaller project would serve you better, we'll tell you — talking someone into more than they need is how you end up working with them only once.
+We listen before we quote. The first call is about your business and what's getting in the way — then a proposal in plain language: what we'll build, how long it takes, what it costs. If a smaller project would serve you better, we'll say so.
 
-While we build, you can watch. Work lands on a staging site every few days, so you're never a month in the dark wondering what's going on. And you talk directly with the two people writing the code. No account manager forwarding your emails, no "delivery lead" who's never opened the repo, no layer of managers between you and the people building it — and no flights on your invoice for what could've been a Google Meet.
+While we build, you watch: work lands on a staging site every few days, and you talk straight to the two people writing the code. No account manager forwarding your emails, no "delivery lead" who's never opened the repo, no flights on your invoice for what could've been a Google Meet.
 
-And that overhead gets paid twice: once by you, and once by whoever's building your site — in pressure, cut corners, and a fried head shipping at 2am. You pay more and get worse. Two of us, no middle layer, so nobody pays that bill. Just the work.
-
-When we launch, you get documentation, training for your team, and a clean handover path. If you ever decide to take the work in-house, it goes with you. That's the deal.
+That overhead gets paid twice — once by you, once by whoever's building your site, in cut corners and 2am shipping. Two of us, no middle layer, so nobody pays that bill. At launch you get documentation, training, and a clean handover; if you ever take the work in-house, it goes with you.
 
 ### The AI part
 
-We should be upfront about this, because it's a real part of how we work: we use AI all day, and we've gotten good at it.
+We use AI all day, and we've gotten good at it. Every commit gets reviewed by the two of us plus an AI reviewer in the pipeline — roughly a third engineer on call. The code is still ours; we just ship it about three times faster, with fewer bugs reaching production.
 
-Every commit gets reviewed by the two of us plus an AI reviewer in the pipeline, roughly like having a third engineer on call. It flags things earlier and catches regressions faster. The code is still ours. We just ship it about three times faster than we used to, and fewer bugs make it to production.
-
-If AI tooling makes you uneasy, we're probably not your studio. We've spent the last few years learning to use it well without losing the plot, and we'd rather tell you that up front.
+If AI tooling makes you uneasy, we're probably not your studio — and we'd rather say that up front.
 
 ### What it costs
 
-We're in Argentina, so senior work here costs less than it would from a studio in Berlin or Austin — same quality, cheaper cost of living. We quote a fixed price per project after the first conversation, and it doesn't move.
+We're in Argentina: senior work at a lower cost of living, same quality. We quote a fixed price per project after the first conversation, and it doesn't move.
 
 ### Write to us
 
-Tell us what you're trying to build. A line or twenty, both work. We reply within a business day, and if we're not the right fit we'll say so and try to point you somewhere better. We only take a couple of projects at a time, so it's worth writing early.
+Tell us what you're trying to build — a line or twenty, both work. We reply within a business day, and if we're not the right fit we'll point you somewhere better. We only take a couple of projects at a time, so write early.
 
 Contact form fields: name, email, company (optional), message.
 
