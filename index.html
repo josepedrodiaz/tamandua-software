@@ -713,9 +713,8 @@ uptime: 99.99%</pre>
   }
   function hub() {                                         // 3 · architecture — one core, six brands
     const pts = [[0.5,0.5]], edges = [], ring = r => { for (let i = 0; i < 6; i++) { const a = Math.PI/2+i*Math.PI/3; pts.push([0.5+r*Math.cos(a), 0.5-r*Math.sin(a)]); } };
-    ring(0.19); ring(0.38); pts.push([0.5,0.06]);
+    ring(0.19); ring(0.38);   // inner hexagon + outer spike tips — fully symmetric, no odd spire on top
     for (let i = 1; i <= 6; i++) { edges.push([0,i]); edges.push([i, i===6?1:i+1]); edges.push([i, i+6]); }
-    edges.push([0,13]);
     return { pts, edges };
   }
   function dome() {                                        // 4 · scale — a triangulated geodesic dome
@@ -787,10 +786,11 @@ uptime: 99.99%</pre>
     const rot = 0.045 * Math.sin(breathe * 0.19), dWx = 0.012 * Math.sin(breathe * 0.15), dWy = 0.012 * Math.cos(breathe * 0.12);
     const rTo = 0.05 * Math.sin(breathe * 0.20), dTox = 0.010 * Math.sin(breathe * 0.16), dToy = 0.010 * Math.cos(breathe * 0.13);
     const rTi = -0.075 * Math.sin(breathe * 0.28 + 1.3), dTix = 0.024 * Math.sin(breathe * 0.24 + 2.1), dTiy = 0.024 * Math.cos(breathe * 0.19 + 1.1);
+    const FLOATMUL = [1, 1, 1.7, 1, 1];   // per-card float amount — the hub (card 3) floats more
     const rigid = (fig, i, x, y) => {   // → offset that turns a settled node into its rigid-floated one
       let cx, cy, th, dx, dy;
       if (fig === 0) { const inr = i >= 8; cx = inr?C_IN[0]:C_OUT[0]; cy = inr?C_IN[1]:C_OUT[1]; th = inr?rTi:rTo; dx = inr?dTix:dTox; dy = inr?dTiy:dToy; }
-      else { cx = CEN[fig][0]; cy = CEN[fig][1]; th = rot; dx = dWx; dy = dWy; }
+      else { const m = FLOATMUL[fig]; cx = CEN[fig][0]; cy = CEN[fig][1]; th = rot * m; dx = dWx * m; dy = dWy * m; }
       const c = Math.cos(th), sn = Math.sin(th), ox0 = x - cx, oy0 = y - cy;
       return [cx + ox0*c - oy0*sn + dx - x, cy + ox0*sn + oy0*c + dy - y];
     };
