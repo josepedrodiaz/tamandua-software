@@ -34,6 +34,15 @@ We also do the unreasonable jobs. Ultra-migrations: forty million rows moved liv
 
 …and then we make it look this simple again. That's the whole point.
 
+### A few we've shipped
+
+Recent first, a line each. Names where the client's happy to be named, shapes where they're not.
+
+- La Mañana (https://www.lamañana.uy) — Rebuilt a Uruguayan daily on WordPress: an editorial redesign, a custom subscriptions system, and thousands of archived articles migrated behind clean 301s. (2026 · news relaunch · WordPress · JNews · custom subscriptions)
+- A medical e-commerce platform — Traced seventeen-second carts and checkouts on a WooCommerce store down to its external calls — an ERP, FedEx, and a serverless license check — and caught a bug quietly serving every customer default prices instead of their negotiated ones. (2026 · WooCommerce · Business Central ERP · performance forensics)
+- A pharmacy group near Manchester — Several pharmacies running on one shared codebase; each branch's site stood up as a controlled clone of the last, clinical-service pages and booking swapped per location, every page SEO-verified before it deploys. (2026 · WordPress · multi-site template · Kinsta)
+- A promotional-products store — Took a nationwide branded-merch store from a no-code prototype to a real WordPress build: the full catalog plus a B2B quote flow with multi-address shipping and artwork upload. (2026 · WordPress · online store · custom quote flow)
+
 ### How we work
 
 We listen before we quote. The first call is about your business and what's getting in the way — then a proposal in plain language: what we'll build, how long it takes, what it costs. If a smaller project would serve you better, we'll say so.

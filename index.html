@@ -146,6 +146,17 @@ a[href^="mailto:"]{overflow-wrap:anywhere}
   font-size:17px;
 }
 
+/* selected work — an editorial index, not a card grid: name, one line, small mono metadata */
+.worklist{list-style:none;margin:6px 0 0}
+.worklist li{padding:24px 0;border-top:1px solid var(--rule)}
+.worklist li:first-child{border-top:none;padding-top:4px}
+.w-name{font-weight:500;font-size:20px;line-height:1.25;margin-bottom:6px;letter-spacing:-0.005em}
+.w-name a{color:var(--ink);text-decoration:none}
+.w-name a:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.w-name .ext{font-size:0.72em;color:var(--ink-soft);vertical-align:0.08em;margin-left:0.25em}
+.w-desc{color:var(--ink-soft);margin-bottom:10px}
+.w-meta{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:0.02em;color:var(--ink-soft);margin:0}
+
 /* the tear — mid-letter interlude.
    Static by default (no JS / reduced motion); .js-tear enables the scroll-driven version.
    The world is signal-fluo: acts alternate full fluo fields (ink-black type)
@@ -524,6 +535,33 @@ uptime: 99.99%</pre>
   <section class="tear-outro">
     <p><em>…and then we make it look this simple again.</em> That's the whole point.</p>
   </section>
+
+  <h2 id="work">A few we've shipped</h2>
+
+  <p>Recent first, a line each. Names where the client's happy to be named, shapes where they're not.</p>
+
+  <ul class="worklist">
+    <li>
+      <p class="w-name"><a href="https://www.xn--lamaana-7za.uy/" target="_blank" rel="noopener">La Mañana<span class="ext">↗</span></a></p>
+      <p class="w-desc">Rebuilt a Uruguayan daily on WordPress: an editorial redesign, a custom subscriptions system, and thousands of archived articles migrated behind clean 301s.</p>
+      <p class="w-meta">2026 · news relaunch · WordPress · JNews · custom subscriptions</p>
+    </li>
+    <li>
+      <p class="w-name">A medical e-commerce platform</p>
+      <p class="w-desc">Traced seventeen-second carts and checkouts on a WooCommerce store down to its external calls — an ERP, FedEx, and a serverless license check — and caught a bug quietly serving every customer default prices instead of their negotiated ones.</p>
+      <p class="w-meta">2026 · WooCommerce · Business Central ERP · performance forensics</p>
+    </li>
+    <li>
+      <p class="w-name">A pharmacy group near Manchester</p>
+      <p class="w-desc">Several pharmacies running on one shared codebase — each branch's site stood up as a controlled clone of the last, clinical-service pages and booking swapped per location, every page SEO-verified before it deploys.</p>
+      <p class="w-meta">2026 · WordPress · multi-site template · Kinsta</p>
+    </li>
+    <li>
+      <p class="w-name">A promotional-products store</p>
+      <p class="w-desc">Took a nationwide branded-merch store from a no-code prototype to a real WordPress build — the full catalog plus a B2B quote flow with multi-address shipping and artwork upload.</p>
+      <p class="w-meta">2026 · WordPress · online store · custom quote flow</p>
+    </li>
+  </ul>
 
   <h2 id="process">How we work</h2>
 

@@ -13,6 +13,7 @@ The site itself is written as a letter from the studio: one page, one column, pl
 ## How we work
 
 - [The unreasonable jobs](https://tamandua-software.com/#unreasonable): Large live migrations with zero downtime, multi-brand architectures on one codebase, peak-traffic WooCommerce, legacy PHP rescues. Presented as a scroll-driven interlude in the letter.
+- [Selected work](https://tamandua-software.com/#work): Recent projects — La Mañana, a Uruguayan daily relaunched on WordPress; performance forensics on a WooCommerce store wired to an ERP, FedEx and a serverless license API; a multi-site pharmacy platform near Manchester; a promotional-products store rebuilt from a no-code prototype.
 - [Process](https://tamandua-software.com/#process): Listen first, then a plain-language proposal with fixed price. Work lands on staging every few days. Documentation and clean handover at launch.
 - [The AI part](https://tamandua-software.com/#ai): Every commit is reviewed by two senior engineers plus an AI reviewer in the pipeline. Roughly 3× faster shipping, fewer bugs reaching production.
 - [Pricing](https://tamandua-software.com/#pricing): Based in Argentina — senior work at regional cost. Fixed price per project, quoted after the first conversation, and it doesn't move.
