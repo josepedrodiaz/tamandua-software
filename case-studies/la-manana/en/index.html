@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="../../../favicon.svg">
+<title>Rebuilding La Mañana</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --paper: #f3f0ea;
+    --paper-2: #eae5db;
+    --card: #fbf9f5;
+    --ink: #17130e;
+    --ink-soft: #4a423a;
+    --ink-faint: #8a7f72;
+    --rule: #d8d0c2;
+    --red: #d40808;
+    --red-ink: #b00606;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #14110d;
+      --paper-2: #0e0c09;
+      --card: #1c1813;
+      --ink: #f0eadf;
+      --ink-soft: #c3b8a7;
+      --ink-faint: #857b6c;
+      --rule: #332c22;
+      --red: #ff473f;
+      --red-ink: #ff6a63;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14110d;
+    --paper-2: #0e0c09;
+    --card: #1c1813;
+    --ink: #f0eadf;
+    --ink-soft: #c3b8a7;
+    --ink-faint: #857b6c;
+    --rule: #332c22;
+    --red: #ff473f;
+    --red-ink: #ff6a63;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.64;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 26px; }
+
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .topbar .wrap {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; padding-top: 12px; padding-bottom: 12px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .topbar strong { color: var(--ink); font-weight: 600; letter-spacing: .16em; }
+  .topbar .dot { color: var(--red); }
+
+  .hero { padding: 62px 0 40px; }
+  .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--red);
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 30px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  h1 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 8vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 26px;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--red); font-weight: 600; }
+  .standfirst {
+    font-size: clamp(1.12rem, 2.5vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 42ch;
+    margin: 0 0 34px;
+    text-wrap: pretty;
+  }
+  .byline {
+    display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: baseline;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px; letter-spacing: .04em;
+    color: var(--ink-faint);
+    padding-top: 22px; border-top: 1px solid var(--rule);
+  }
+  .byline b { color: var(--ink); font-weight: 600; }
+
+  .bridge {
+    margin: 8px 0 50px;
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 22px;
+  }
+  .bridge .yr {
+    font-family: "IBM Plex Serif", serif; font-weight: 700;
+    font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .bridge .yr small {
+    display: block; font-family: "IBM Plex Mono", monospace;
+    font-weight: 500; font-size: 10.5px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--ink-faint); margin-top: 8px;
+  }
+  .bridge .span { position: relative; height: 2px; background: var(--rule); }
+  .bridge .span::before {
+    content: "109 years"; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    background: var(--paper); padding: 0 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--red);
+    white-space: nowrap;
+  }
+  .bridge .yr.now { text-align: right; color: var(--red); }
+
+  section.body { padding-bottom: 20px; }
+  .body h2 {
+    font-family: "IBM Plex Serif", serif; font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.14;
+    letter-spacing: -0.015em;
+    margin: 58px 0 18px; text-wrap: balance;
+  }
+  .body .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--red); margin: 0 0 -4px;
+  }
+  .body .eyebrow + h2 { margin-top: 12px; }
+  .body p { margin: 0 0 22px; }
+  .body a { color: var(--red-ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .lead {
+    font-size: 1.16rem; line-height: 1.55;
+  }
+  .body em { font-style: italic; }
+
+  hr.rule { border: 0; height: 1px; background: var(--rule); margin: 44px 0; }
+
+  blockquote {
+    margin: 42px 0; padding: 4px 0 4px 26px;
+    border-left: 3px solid var(--red);
+    font-family: "IBM Plex Serif", serif; font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3.4vw, 1.7rem); line-height: 1.32;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  blockquote cite {
+    display: block; margin-top: 16px; font-style: normal;
+    font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint);
+  }
+
+  .metrics {
+    background: var(--card);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 56px 0;
+  }
+  .metrics .wrap { padding-top: 40px; padding-bottom: 40px; }
+  .metrics .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 26px; }
+  .metric .num {
+    font-family: "IBM Plex Serif", serif; font-weight: 700;
+    font-size: clamp(1.7rem, 5vw, 2.5rem); line-height: 1;
+    letter-spacing: -0.02em; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .metric .num .arrow { color: var(--red); font-weight: 400; margin: 0 2px; }
+  .metric .lbl {
+    margin-top: 10px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: .12em; text-transform: uppercase; line-height: 1.5;
+    color: var(--ink-faint);
+  }
+
+  .work { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 26px 0 8px; }
+  .chapter { background: var(--card); padding: 26px 28px; }
+  .chapter h3 {
+    font-family: "IBM Plex Serif", serif; font-weight: 600;
+    font-size: 1.28rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em;
+  }
+  .chapter p { margin: 0; font-size: 17px; line-height: 1.58; color: var(--ink-soft); }
+  .chapter code, .tag {
+    font-family: "IBM Plex Mono", monospace; font-size: .82em;
+    background: var(--paper-2); color: var(--ink-soft);
+    padding: 1px 6px; border-radius: 3px; white-space: nowrap;
+  }
+
+  .signoff {
+    margin: 48px 0 0; padding-top: 28px; border-top: 3px double var(--rule);
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px;
+    letter-spacing: .04em; color: var(--ink-faint); line-height: 1.7;
+  }
+  .signoff b { color: var(--ink); font-weight: 600; }
+  .signoff .mark { color: var(--red); }
+
+  footer.foot { border-top: 1px solid var(--rule); background: var(--paper-2); margin-top: 60px; }
+  footer.foot .wrap {
+    padding: 26px 26px 40px; display: flex; flex-wrap: wrap;
+    justify-content: space-between; gap: 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint);
+  }
+
+  @media (max-width: 620px) {
+    body { font-size: 18px; }
+    .metrics .grid { grid-template-columns: repeat(2, 1fr); }
+    .bridge { gap: 14px; }
+  }
+  @media (max-width: 380px) { .metrics .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap">
+    <span><strong>TAMANDUA</strong> <span class="dot">/</span> CASE STUDY</span>
+    <span>MONTEVIDEO · UY</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Press &amp; Web</div>
+    <h1>A century of journalism <em>on screen</em></h1>
+    <p class="standfirst">How we rebuilt the site for La Mañana, one of Uruguay's oldest newspapers, without betraying the hundred-plus years behind its name.</p>
+    <div class="byline">
+      <span>By <b>Tamandua</b></span>
+      <span>Web development &amp; infrastructure</span>
+      <span>Uruguay · 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="bridge">
+    <div class="yr">1917<small>Founded</small></div>
+    <div class="span"></div>
+    <div class="yr now">2026<small>Relaunch</small></div>
+  </div>
+</div>
+
+<section class="body">
+  <div class="wrap">
+    <p class="lead">Some jobs are code, and some jobs are a responsibility. Rebuilding La Mañana's site was the second kind. It wasn't just another website: it was the masthead of a newspaper that started printing on July 1st, 1917, and which, through interruptions, silences and comebacks, still comes out more than a century later. When a project carries that kind of weight, the first technical decision is also one of respect: don't break anything that already survived this long.</p>
+
+    <p class="eyebrow">The history</p>
+    <h2>The newspaper that refused to disappear</h2>
+    <p>La Mañana was born as a soapbox. Pedro Manini Ríos and Héctor R. Gómez founded it in the thick of Batllista Uruguay, to argue with power from the press. In its pages it defended ideas that today are historic achievements, the ones that put Uruguay at the front of the region, like universal secret suffrage and the eight-hour workday. Behind those achievements was a modern idea of a country.</p>
+    <p>It was one of the great morning papers of 20th-century Uruguay, until, like so many print dailies, it stopped printing in the late nineties. It could have ended there, a collection of yellowed copies in a newspaper archive. But the brand went back to the family and the name went back onto the street: since 2019 La Mañana is published again, now digitally too. That "again, now digital" is exactly where a studio like ours comes in.</p>
+
+    <blockquote>
+      A senior newspaper doesn't get redesigned. It gets restored, modernized, and put back to work without the surgery showing.
+      <cite>Working principle — Tamandua</cite>
+    </blockquote>
+
+    <p class="eyebrow">The problem</p>
+    <h2>The brief</h2>
+    <p>The site existed, but it carried years of drag: duplicate categories, a slow search, a homepage with no hierarchy, fragile historic content, and a publishing flow that depended on touching the server by hand. None of that gets fixed by switching to a new theme. It gets fixed by opening up the mechanism with a watchmaker's care.</p>
+    <p>The starting stack was WordPress with Elementor. The brief we set for ourselves was clear: work on top of what's already alive, optimizing and improving along the way, without tearing anything down and keeping the service 100% up the whole time.</p>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="grid">
+      <div class="metric"><div class="num">1917</div><div class="lbl">Year founded</div></div>
+      <div class="metric"><div class="num">4,797</div><div class="lbl">Articles migrated</div></div>
+      <div class="metric"><div class="num">4.0s<span class="arrow">→</span>1.1s</div><div class="lbl">Search time</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="body">
+  <div class="wrap">
+    <p class="eyebrow">The work</p>
+    <h2>What we did</h2>
+    <p>Telling a project like a checklist strips it of its soul. But a newspaper is also built section by section, so we laid it out the same way: by fronts, each one solving a piece of the same problem — that a reader opens the site and feels like they're looking at a serious, fast, well-organized newspaper.</p>
+
+    <div class="work">
+      <div class="chapter">
+        <h3>A faithful mirror of production</h3>
+        <p>We cloned the real site into a staging environment with its own domain, so the client could see and approve every change before it touched the live site. The historic content migration was done carefully, keeping it 100% intact — nothing lost along the way, and none of the SEO earned over the years given up either.</p>
+      </div>
+      <div class="chapter">
+        <h3>Editorial order in the archive</h3>
+        <p>Years of overlapping sections became a clear map: we merged Política and Actualidad into a single section, Información, regrouping 4,797 articles without losing a single one, and sorted Opinión into editorials, letters to the editor, and columns. Everything old still lands where it should, through 301 redirects, so not one link indexed since the site came back in 2019 breaks.</p>
+      </div>
+      <div class="chapter">
+        <h3>A homepage with a newspaper's hierarchy</h3>
+        <p>We redesigned the front page with a three-column hero, red rules <span class="tag"><span style="display:inline-block;width:10px;height:10px;background:#E30202;border-radius:2px;margin-right:5px;vertical-align:middle;"></span>#E30202</span> like a printed paper's, crisp vector logos, and hand-picked typography: IBM Plex Serif for headlines, Source Serif 4 for body text. Magazine-style cover treatment for the editorial piece, sections that reveal on scroll, tidy mega-menus. Visual weight where the news calls for it.</p>
+      </div>
+      <div class="chapter">
+        <h3>Secondary stories that learn on their own</h3>
+        <p>Nobody picks the hero's stories by hand: they start out rotating evenly, and as they rack up clicks the system starts favoring whichever ones actually work, giving them the slots with images. All visible from a dedicated panel in the editor.</p>
+      </div>
+      <div class="chapter">
+        <h3>Speed, a form of respect for the reader</h3>
+        <p>Search used to take four seconds; we got it down to 1.1 by stripping a <code>JOIN</code> the query didn't need. We added cache purging on publish, so a new article shows up instantly in its section, and fixed the per-section RSS feeds so they stop getting stuck repeating the same stories.</p>
+      </div>
+      <div class="chapter">
+        <h3>Tools for the newsroom</h3>
+        <p>The article editor gained a subtitle field and SEO/social metadata (Open Graph, Twitter), so every piece gets shared properly, using its dek as the summary when there's no other text. Small details that save whoever's writing some daily friction.</p>
+      </div>
+      <div class="chapter">
+        <h3>Publishing without fear</h3>
+        <p>We set up a flow where a <code>git push</code> deploys itself: the staging server pulls every minute, rebuilds styles and purges caches. With guards against overwriting versioned files, and a protocol built for multiple developers working in parallel without stepping on each other. The boring infrastructure, the kind nobody sees, is what holds up everything else.</p>
+      </div>
+    </div>
+
+    <hr class="rule">
+
+    <p class="eyebrow">The roadmap</p>
+    <h2>What's coming</h2>
+    <p>A hundred-year-old newspaper coming back also needs to be able to live off its readers. So the next, most ambitious frontier is a paywall with recurring subscriptions built for today's Uruguay, plus an e-Paper: the day's edition in an HTML5 viewer, with a back-issue library searchable by date and reserved for subscribers. It's the point where technology stops just holding up the newspaper and starts funding it too.</p>
+
+    <p class="eyebrow">The close</p>
+    <h2>Why it matters to us</h2>
+    <p>You can build a news site in an afternoon. The hard part isn't standing up a website: it's taking a name that's been going out onto the street for over a century and bringing it back to the screen without losing the weight or the seriousness it earned in print.</p>
+    <p>That's what this project was about. Putting modern engineering — careful migrations, tuned queries, automatic deploys — in service of something that predates it by generations: the trade of telling people what happened, every morning.</p>
+
+    <p class="signoff">
+      <span class="mark">■</span> <b>Tamandua</b> — Web development and infrastructure.<br>
+      La Mañana · Uruguay · Ongoing project, 2026.<br>
+      Founded in 1917. Never fully quiet.
+    </p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span><a href="/#work" style="color:var(--ink);text-decoration:none">← tamandua-software.com</a></span>
+    <span>Case study</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+</body>
+</html>
